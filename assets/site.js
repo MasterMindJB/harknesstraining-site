@@ -81,7 +81,12 @@ HTS.renderSchedule = function (el) {
 HTS.sendForm = function (form, extra) {
   var status = form.querySelector(".form-status");
   var data = {};
-  Array.prototype.forEach.call(form.elements, function (f) { if (f.name) data[f.name] = f.value.trim(); });
+  Array.prototype.forEach.call(form.elements, function (f) {
+    if (!f.name) return;
+    if (f.type === "checkbox") { data[f.name] = f.checked ? "yes" : "no"; return; }
+    if (f.type === "radio") { if (f.checked) data[f.name] = f.value; return; }
+    data[f.name] = f.value.trim();
+  });
   for (var k in (extra || {})) data[k] = extra[k];
   if (!HTS.formspree && !HTS.sheetHook) {
     var lines = Object.keys(data).filter(function (k) { return k.charAt(0) !== "_"; }).map(function (k) { return k + ": " + data[k]; });
