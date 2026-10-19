@@ -19,6 +19,10 @@ var HTS = {
   // open an email to hello@ with the details filled in.
   formspree: "",
 
+  // Google Apps Script web app URL (ends in /exec). When set, every form
+  // adds a row to the Harkness Google Sheet and emails hello@.
+  sheetHook: "https://script.google.com/macros/s/AKfycbw3aS7Oo1EQxCYNcoiulnnb9To3fZLwzPn9pJxin917fWLGlcNr1jACo_WDErk1jCEmjw/exec",
+
   // Social profiles. Empty = icon stays hidden.
   social: { linkedin: "", youtube: "", x: "https://x.com/HarknessTrain" },
 
@@ -79,7 +83,7 @@ HTS.sendForm = function (form, extra) {
   var data = {};
   Array.prototype.forEach.call(form.elements, function (f) { if (f.name) data[f.name] = f.value.trim(); });
   for (var k in (extra || {})) data[k] = extra[k];
-  if (!HTS.formspree) {
+  if (!HTS.formspree && !HTS.sheetHook) {
     var lines = Object.keys(data).filter(function (k) { return k.charAt(0) !== "_"; }).map(function (k) { return k + ": " + data[k]; });
     location.href = "mailto:" + HTS.email + "?subject=" + encodeURIComponent(data._subject || "Website message") + "&body=" + encodeURIComponent(lines.join("\n"));
     status.textContent = "Your email app should open with this filled in. If it doesn't, write to " + HTS.email + ".";
@@ -87,10 +91,7 @@ HTS.sendForm = function (form, extra) {
     return;
   }
   status.textContent = "Sending…"; status.className = "form-status";
-  fetch("https://formspree.io/f/" + HTS.formspree, {
-    method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(data)
-  }).then(function (r) {
-    if (!r.ok) throw new Error();
+  function done() {
     status.textContent = form.getAttribute("data-ok") || "Sent. We'll reply within one business day.";
     if (!document.getElementById("book")) {
       var nx = document.createElement("span");
@@ -98,10 +99,19 @@ HTS.sendForm = function (form, extra) {
       status.appendChild(nx);
     }
     status.className = "form-status ok"; form.reset();
-  }).catch(function () {
+  }
+  function fail() {
     status.textContent = "That didn't go through. Please email " + HTS.email + " instead.";
     status.className = "form-status err";
-  });
+  }
+  if (HTS.sheetHook) {
+    data._page = location.pathname.replace(/^\//, "") || "home";
+    fetch(HTS.sheetHook, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) }).then(done).catch(fail);
+    return;
+  }
+  fetch("https://formspree.io/f/" + HTS.formspree, {
+    method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(data)
+  }).then(function (r) { if (!r.ok) throw new Error(); done(); }).catch(fail);
 };
 
 /* ---------------- wire up every page ---------------- */
