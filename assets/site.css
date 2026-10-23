@@ -1016,3 +1016,30 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 
 /* rev 31: tagline, then explanation line, then buttons */
 .hero .pos-2{margin-top:12px}
+
+/* rev 32: Heather revisions */
+/* the "read the books" lines, more prominent */
+.gap-sec .lede.punch{margin-top:48px!important;max-width:none;font-size:clamp(1.3rem,2.5vw,1.85rem);line-height:1.4;font-weight:500;color:var(--ink);padding-left:clamp(16px,2vw,24px);border-left:4px solid var(--sky)}
+.gap-sec .lede.punch strong{font-weight:700;color:var(--ink)}
+/* removed lede lines: keep rhythm */
+#how .flow{margin-top:36px}
+#open-night .dates{margin-top:28px}
+#programs .grow-h{margin-top:0}
+/* pricing: no dots or connecting line; reads as a menu */
+.vpath::before,.vpath li::before,.vpath li.key::before{content:none;display:none}
+.vpath li{padding:14px 16px;border-top:1px solid var(--line)}
+.vpath li:first-child{border-top:0}
+.vpath li.key{border-top-color:transparent}
+.vpath li.key + li{border-top-color:transparent}
+/* Take 1 / Take 2: subtle lift on hover and keyboard focus */
+.tk{cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background-color .25s ease}
+.tk:hover,.tk:focus-within{transform:translateY(-4px);box-shadow:0 14px 32px -16px rgba(0,0,0,.55);border-color:color-mix(in srgb,var(--on-navy) 32%,transparent)}
+.tk2:hover,.tk2:focus-within{border-color:#6CABDD}
+.tk:hover .play,.tk:focus-within .play{transform:scale(1.06)}
+.tk .play:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.tk.is-playing{border-color:color-mix(in srgb,var(--on-navy) 32%,transparent)}
+.tk2.is-playing{border-color:#6CABDD}
+@media (hover:none){.tk:hover{transform:none;box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.tk,.tk .play{transition:none}.tk:hover,.tk:focus-within{transform:none}.tk:hover .play,.tk:focus-within .play{transform:none}}
+/* demo page: intro sentence removed, so pull the calendar closer to the title */
+.page-hero:has(+ .book-sec) .hero-grid{padding-block:clamp(36px,4.5vw,56px) clamp(40px,5vw,56px)}

@@ -524,3 +524,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
+
+/* rev 32: tapping anywhere on a Take card plays or pauses it */
+(function () {
+  function init() {
+    document.querySelectorAll("[data-player]").forEach(function (card) {
+      var btn = card.querySelector(".play"), au = card.querySelector("audio");
+      au.addEventListener("play", function () { card.classList.add("is-playing"); });
+      au.addEventListener("pause", function () { card.classList.remove("is-playing"); });
+      card.addEventListener("click", function (e) {
+        if (e.target.closest(".play, .wf, a, button")) return;
+        if (window.getSelection && String(window.getSelection()).length) return;
+        btn.click();
+      });
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
