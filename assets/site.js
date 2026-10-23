@@ -95,7 +95,7 @@ HTS.renderSchedule = function (el) {
         '<a class="btn btn-hot" href="' + HTS.registerLink(d, s) + '"' + ext + ' data-session="' + HTS.fmtDate(d.date, true) + ' · ' + s.label + ' · ' + s.time + '" aria-label="Save a seat, ' + s.label + ', ' + HTS.fmtDate(d.date, true) + '">Save a seat</a></div>';
     }).join("");
     return '<li class="date' + (i === 0 ? " next" : "") + '"><div class="date-head">' + (i === 0 ? '<span class="date-tag">Next</span>' : "") +
-      '<span class="date-day">' + HTS.fmtDate(d.date, false) + '</span></div><div class="sessions">' + sess + "</div></li>";
+      '<span class="date-day">' + HTS.fmtDate(d.date, false) + '</span></div><div class="sessions' + (list.length === 1 ? " one" : "") + '">' + sess + "</div></li>";
   }).join("");
 };
 

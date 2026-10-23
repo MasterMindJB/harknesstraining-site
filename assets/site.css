@@ -1059,3 +1059,11 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 .hero .pos-2 span{display:block}
 @media (min-width:900px){.hero .pos-2 .l1,.hero .pos-2 .l2{display:inline}}
 @media (max-width:899px){.hero-grid.solo .pos.pos-2{font-size:1.02rem;line-height:1.55}.hero .pos-2 span{text-wrap:balance}.hero .pos-2 span + span{margin-top:4px}}
+
+/* rev 36: a date with one session fills the row instead of leaving half empty */
+.sessions.one{grid-template-columns:1fr}
+@media (min-width:821px){
+  .sessions.one .session{flex-direction:row;align-items:center;flex-wrap:wrap;column-gap:20px}
+  .sessions.one .session .fmt{align-self:center}
+  .sessions.one .session .btn{margin-left:auto;align-self:center}
+}
