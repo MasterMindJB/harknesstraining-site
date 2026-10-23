@@ -1052,4 +1052,10 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 
 /* rev 34: method line in two legible lines, as wide as the headline */
 .hero-grid.solo .pos-2{max-width:none}
-@media (min-width:900px){.hero .pos-2 span{display:block}}
+
+/* rev 35: hero readability */
+.hero-grid.solo .pos:not(.pos-2){font-size:clamp(1.3rem,2vw,1.55rem);font-weight:600;color:var(--on-navy)}
+.hero .pos-2{margin-top:14px;color:var(--on-navy-muted);line-height:1.6}
+.hero .pos-2 span{display:block}
+@media (min-width:900px){.hero .pos-2 .l1,.hero .pos-2 .l2{display:inline}}
+@media (max-width:899px){.hero-grid.solo .pos.pos-2{font-size:1.02rem;line-height:1.55}.hero .pos-2 span{text-wrap:balance}.hero .pos-2 span + span{margin-top:4px}}
