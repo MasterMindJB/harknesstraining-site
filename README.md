@@ -20,7 +20,7 @@ The top of the file holds every link and the Open Night schedule.
 - `social`: LinkedIn, YouTube and X links. An icon only appears once its link is filled in.
 - `demoBooking`: the Google Calendar booking link (already set).
 - `demoEmbed`: optional. In Google Calendar, open the appointment schedule, choose Share → Website embed → Inline, and paste the long URL (it ends in `?gv=true`). The demo page then shows the calendar on the page.
-- `openNight`: first date (Oct 29), every 3 weeks, 4 upcoming dates shown, two sessions per date (online 12:00–1:30 PM, in person 6:00–7:30 PM in El Segundo; the address goes out after registration). Past dates drop off automatically. To cancel a date, add it to `skip`, e.g. `skip: ["2026-12-31"]`.
+- `openNight`: first date (Oct 29), every 3 weeks, 4 upcoming dates shown. Every Open Night has an online session (12:00–1:30 PM). From `inPersonFrom` (Dec 1, 2026) the first Open Night of each month also has an in-person session (6:00–7:30 PM in El Segundo; the address goes out after registration). Past dates drop off automatically. To cancel a date, add it to `skip`, e.g. `skip: ["2026-12-31"]`.
 
 ## Share preview, icon and phone bar
 

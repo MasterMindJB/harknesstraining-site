@@ -40,7 +40,10 @@ var HTS = {
     show: 4,                    // how many upcoming dates to list
     skip: ["2026-12-31"],       // dates to drop (holiday week)
     online:   { label: "Online",    time: "12:00–1:30 PM", where: "Link sent after registration" },
-    inPerson: { label: "In person", time: "6:00–7:30 PM",  where: "El Segundo · details sent after registration" }
+    inPerson: { label: "In person", time: "6:00–7:30 PM",  where: "El Segundo · details sent after registration" },
+    // In person: the first Open Night of each month, starting from this date.
+    // Every other Open Night is online only.
+    inPersonFrom: "2026-12-01"
   }
 };
 
@@ -66,12 +69,27 @@ HTS.registerLink = function (d, s) {
   var body = "Name:\nCompany:\nRole:\nThe conversation I want to practice:\nIs your manager or a leader coming to watch?\n";
   return "mailto:" + HTS.email + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
 };
+/* in person: the first scheduled Open Night of each month, from inPersonFrom on */
+HTS.hasInPerson = function (iso) {
+  var o = HTS.openNight;
+  if (!o.inPersonFrom || iso < o.inPersonFrom) return false;
+  var d = new Date(o.first + "T12:00:00");
+  for (var i = 0; i < 120; i++) {
+    var x = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    if (x.slice(0, 7) === iso.slice(0, 7) && o.skip.indexOf(x) === -1) return x === iso;
+    if (x > iso) return false;
+    d.setDate(d.getDate() + 7 * o.everyWeeks);
+  }
+  return false;
+};
 HTS.renderSchedule = function (el) {
   var n = parseInt(el.getAttribute("data-count") || HTS.openNight.show, 10);
   var dates = HTS.dates(n);
   if (!dates.length) { el.outerHTML = '<p class="dates-empty">New dates are coming soon. Email ' + HTS.email + ' to hear first.</p>'; return; }
   el.innerHTML = dates.map(function (d, i) {
-    var sess = [HTS.openNight.online, HTS.openNight.inPerson].map(function (s) {
+    var o = HTS.openNight;
+    var list = HTS.hasInPerson(d.iso) ? [o.online, o.inPerson] : [o.online];
+    var sess = list.map(function (s) {
       var ext = HTS.luma ? ' target="_blank" rel="noopener"' : "";
       return '<div class="session ' + (s === HTS.openNight.online ? "s-online" : "s-inperson") + '"><span class="fmt">' + s.label + '</span><span class="when">' + s.time + '</span><span class="where">' + s.where + '</span>' +
         '<a class="btn btn-hot" href="' + HTS.registerLink(d, s) + '"' + ext + ' data-session="' + HTS.fmtDate(d.date, true) + ' · ' + s.label + ' · ' + s.time + '" aria-label="Save a seat, ' + s.label + ', ' + HTS.fmtDate(d.date, true) + '">Save a seat</a></div>';
