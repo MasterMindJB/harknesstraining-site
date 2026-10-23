@@ -1043,3 +1043,9 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 @media (prefers-reduced-motion:reduce){.tk,.tk .play{transition:none}.tk:hover,.tk:focus-within{transform:none}.tk:hover .play,.tk:focus-within .play{transform:none}}
 /* demo page: intro sentence removed, so pull the calendar closer to the title */
 .page-hero:has(+ .book-sec) .hero-grid{padding-block:clamp(36px,4.5vw,56px) clamp(40px,5vw,56px)}
+
+/* rev 33: team rate */
+.tally-head .team-note{grid-column:1/-1;margin:8px 0 0;padding:10px 14px;border-radius:8px;font-size:.92rem;line-height:1.45;color:var(--ink);background:color-mix(in srgb,var(--sky) 14%,transparent);border:1px solid color-mix(in srgb,var(--sky) 45%,transparent)}
+.tally-head .team-note.on{background:color-mix(in srgb,var(--amber) 22%,transparent);border-color:var(--amber)}
+.tally-head .team-note a{color:var(--blue);font-weight:600}
+.vpath .tot.disc-on::before{content:"−10%";display:inline-block;margin-right:8px;padding:.15em .45em;border-radius:4px;font-size:.62em;font-weight:700;letter-spacing:.04em;vertical-align:.2em;background:var(--amber);color:#1C2C5B}

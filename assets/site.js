@@ -23,6 +23,10 @@ var HTS = {
   // adds a row to the Harkness Google Sheet and emails hello@.
   sheetHook: "https://script.google.com/macros/s/AKfycbw3aS7Oo1EQxCYNcoiulnnb9To3fZLwzPn9pJxin917fWLGlcNr1jACo_WDErk1jCEmjw/exec",
 
+  // Team rate: % off Kickoff, Pilot and Full Program (never Practice Lab)
+  // once a team reaches `min` people. Above `max`, the site invites a quote.
+  teamRate: { min: 15, max: 20, off: 0.10 },
+
   // Social profiles. Empty = icon stays hidden.
   social: { linkedin: "", youtube: "https://www.youtube.com/@harknesstraining", x: "https://x.com/HarknessTrain" },
 
@@ -223,7 +227,8 @@ document.addEventListener("DOMContentLoaded", function () {
         lines.push(name + ": " + (tot ? tot.textContent.trim() : ""));
       });
       var n = document.getElementById("tally-n").value;
-      return { _subject: "Pricing estimate for " + n + " people", estimate: "Founding rates for " + n + " people\n" + lines.join("\n") };
+      var tr = +n >= HTS.teamRate.min ? "\nTeam rate: " + Math.round(HTS.teamRate.off * 100) + "% off Kickoff, Pilot and Full Program (included above)" : "";
+      return { _subject: "Pricing estimate for " + n + " people", estimate: "Founding rates for " + n + " people\n" + lines.join("\n") + tr };
     };
   }
 
@@ -233,12 +238,25 @@ document.addEventListener("DOMContentLoaded", function () {
     function money(v) { return "$" + Math.round(v).toLocaleString("en-US"); }
     function draw() {
       var n = Math.max(1, Math.min(200, parseInt(inp.value, 10) || 1));
+      var team = n >= HTS.teamRate.min, off = team ? HTS.teamRate.off : 0;
       tots.forEach(function (t) {
-        t.textContent = money(n * +t.dataset.pp) + (t.dataset.suffix || "");
+        var d = t.hasAttribute("data-disc") && team;
+        t.textContent = money(n * +t.dataset.pp * (d ? 1 - off : 1)) + (t.dataset.suffix || "");
+        t.classList.toggle("disc-on", d);
         t.classList.remove("tick"); void t.offsetWidth; t.classList.add("tick");
       });
       var full = box.querySelector("[data-full]"), sv = box.querySelector("[data-save]"), nn = box.querySelector("[data-n]");
-      if (full && sv) { sv.textContent = money(n * (+full.dataset.next - +full.dataset.pp)) + " less"; nn.textContent = n === 1 ? "1 person" : n + " people"; }
+      if (full && sv) { sv.textContent = money(n * (+full.dataset.next - +full.dataset.pp * (1 - off))) + " less"; nn.textContent = n === 1 ? "1 person" : n + " people"; }
+      var note = box.querySelector("[data-team-note]");
+      if (note) {
+        var t = HTS.teamRate, pct = Math.round(t.off * 100) + "%";
+        if (n > t.max) note.innerHTML = "<b>Team rate applied:</b> " + pct + " off Kickoff, Pilot and Full Program. Over " + t.max + " people? <a href=\"custom.html\">Ask us for a cohort quote</a>.";
+        else if (team) note.innerHTML = "<b>Team rate unlocked:</b> " + pct + " off Kickoff, Pilot and Full Program for teams of " + t.min + "–" + t.max + ".";
+        else if (n >= t.min - 5) note.innerHTML = "Add " + (t.min - n) + " more " + (t.min - n === 1 ? "person" : "people") + " to unlock the team rate: " + pct + " off Kickoff, Pilot and Full Program.";
+        else note.innerHTML = "";
+        note.hidden = !note.innerHTML;
+        note.classList.toggle("on", team);
+      }
       document.querySelectorAll(".est-lead [data-n]").forEach(function (e) { e.textContent = n === 1 ? "1 person" : n + " people"; });
     }
     box.querySelectorAll("[data-step]").forEach(function (b) {
