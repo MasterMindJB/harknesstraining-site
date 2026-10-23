@@ -24,7 +24,7 @@ var HTS = {
   sheetHook: "https://script.google.com/macros/s/AKfycbw3aS7Oo1EQxCYNcoiulnnb9To3fZLwzPn9pJxin917fWLGlcNr1jACo_WDErk1jCEmjw/exec",
 
   // Social profiles. Empty = icon stays hidden.
-  social: { linkedin: "", youtube: "", x: "https://x.com/HarknessTrain" },
+  social: { linkedin: "", youtube: "https://www.youtube.com/@harknesstraining", x: "https://x.com/HarknessTrain" },
 
   email: "hello@harknesstraining.com",
   phone: "(310) 896-5379",

@@ -1010,3 +1010,6 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 .voice.real .beat-key{justify-content:center;font-size:.75rem;margin:0}
 .voice.real .vq-end{margin:0;font-size:clamp(1.1rem,1.8vw,1.3rem)}
 .voice.real .tk-grid{margin-top:0}
+
+/* rev 29: balanced hero tagline */
+.hero .pos{text-wrap:pretty}
