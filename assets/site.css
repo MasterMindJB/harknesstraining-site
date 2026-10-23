@@ -1049,3 +1049,7 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 .tally-head .team-note.on{background:color-mix(in srgb,var(--amber) 22%,transparent);border-color:var(--amber)}
 .tally-head .team-note a{color:var(--blue);font-weight:600}
 .vpath .tot.disc-on::before{content:"−10%";display:inline-block;margin-right:8px;padding:.15em .45em;border-radius:4px;font-size:.62em;font-weight:700;letter-spacing:.04em;vertical-align:.2em;background:var(--amber);color:#1C2C5B}
+
+/* rev 34: method line in two legible lines, as wide as the headline */
+.hero-grid.solo .pos-2{max-width:none}
+@media (min-width:900px){.hero .pos-2 span{display:block}}
