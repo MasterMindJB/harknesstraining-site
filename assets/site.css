@@ -1067,3 +1067,5 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
   .sessions.one .session .fmt{align-self:center}
   .sessions.one .session .btn{margin-left:auto;align-self:center}
 }
+/* rev 37: lead verbs in the method line */
+.hero .pos-2 strong{font-weight:600;color:var(--on-navy)}
