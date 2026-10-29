@@ -1144,9 +1144,6 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
   .quote-card:hover .qc-photo{transform:scale(1.04)}
   .faq details:hover{transform:translateY(-1px)}
 }
-/* testimonial spans the Take 1 / Take 2 grid, same card style as the takes */
-.voice.real .quote-card{justify-self:stretch;text-align:left;max-width:none;margin:max(0px,calc(clamp(14px,2vw,24px) - 18px)) 0 0;border-radius:12px;
-  padding:clamp(18px,2.4vw,26px);background:color-mix(in srgb,var(--on-navy) 5%,transparent);border:1px solid color-mix(in srgb,var(--on-navy) 14%,transparent)}
+/* testimonial: its own card under the takes box, same width so the edges line up */
+.takes-sec .quote-card{max-width:none;margin:36px 0 0}
 .field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#D42A1C;outline-color:#D42A1C}
-.voice.real .quote-card blockquote{font-size:inherit;max-width:none;line-height:inherit;font-weight:inherit;color:inherit}
-.voice.real .quote-card figcaption{font-size:.92rem}
