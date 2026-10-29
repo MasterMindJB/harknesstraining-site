@@ -1147,3 +1147,5 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 /* testimonial: its own card under the takes box, same width so the edges line up */
 .takes-sec .quote-card{max-width:none;margin:36px 0 0}
 .field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#D42A1C;outline-color:#D42A1C}
+/* rev 40: no strikethrough prices; keep the per-person and total columns lined up on every row */
+@media (min-width:561px){.vpath .tot{min-width:11rem}.vpath li.key .tot{padding-right:0}}
