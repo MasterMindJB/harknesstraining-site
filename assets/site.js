@@ -8,7 +8,7 @@ var HTS = {
   // Empty = "Save a seat" buttons open an email to hello@ instead.
   luma: "",
 
-  // Google Calendar appointment schedule (60-minute demo).
+  // Google Calendar appointment schedule (demo; set to 20 minutes in Google Calendar).
   demoBooking: "https://calendar.app.google/77uHPkoSyX5W1MKw6",
 
   // Optional: the long "Embed" URL from Google Calendar appointment
@@ -28,7 +28,7 @@ var HTS = {
   teamRate: { min: 15, max: 20, off: 0.10 },
 
   // Social profiles. Empty = icon stays hidden.
-  social: { linkedin: "", youtube: "https://www.youtube.com/@harknesstraining", x: "https://x.com/HarknessTrain" },
+  social: { linkedin: "", youtube: "https://www.youtube.com/@harknesstraining", x: "https://x.com/harknesstrainin" },
 
   email: "hello@harknesstraining.com",
   phone: "(310) 896-5379",
@@ -39,8 +39,8 @@ var HTS = {
     everyWeeks: 3,
     show: 4,                    // how many upcoming dates to list
     skip: ["2026-12-31"],       // dates to drop (holiday week)
-    online:   { label: "Online",    time: "12:00–1:30 PM", where: "Link sent after registration" },
-    inPerson: { label: "In person", time: "6:00–7:30 PM",  where: "El Segundo · details sent after registration" },
+    online:   { label: "Online",    time: "12:00–1:30 PM PT", where: "Link sent after registration" },
+    inPerson: { label: "In person", time: "6:00–7:30 PM PT",  where: "El Segundo · details sent after registration" },
     // In person: the first Open Lab of each month, starting from this date.
     // Every other Open Lab is online only.
     inPersonFrom: "2026-12-01"
@@ -574,6 +574,63 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.click();
       });
     });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
+
+/* rev 39: pricing opens on hover (or tap); send-to-manager menu that works without a mail app */
+(function () {
+  function init() {
+    document.querySelectorAll("[data-tally]").forEach(function (box) {
+      var cue = box.querySelector(".tally-cue"), t = null;
+      if (!box.querySelector(".tally-body")) return;
+      box.classList.add("collapsible");
+      function open() { box.classList.add("open"); if (cue) cue.setAttribute("aria-expanded", "true"); }
+      function close() { box.classList.remove("open"); if (cue) cue.setAttribute("aria-expanded", "false"); }
+      var canHover = window.matchMedia && matchMedia("(hover:hover) and (pointer:fine)").matches;
+      // Hover opens it. It stays open after that, so the buttons below never jump while you move to them.
+      var manual = false;
+      if (canHover) box.addEventListener("mouseenter", function () { if (!manual) t = setTimeout(open, 120); });
+      if (canHover) box.addEventListener("mouseleave", function () { clearTimeout(t); });
+      if (cue) cue.addEventListener("click", function (e) { e.stopPropagation(); clearTimeout(t); manual = true; box.classList.contains("open") ? close() : open(); });
+      box.querySelector(".tally-head").addEventListener("click", function (e) { if (!e.target.closest(".tally-cue")) open(); });
+      box.addEventListener("focusin", function (e) { if (!e.target.closest(".tally-cue")) open(); });
+      var inp = box.querySelector("input"); if (inp) inp.addEventListener("input", open);
+      if (location.hash === "#programs" || location.hash === "#estimate") open();
+    });
+
+    var btn = document.querySelector("[data-share-menu]");
+    if (!btn) return;
+    var menu = document.getElementById("share-menu"), note = document.querySelector(".share-note");
+    var subj = "Worth a look: Harkness Training";
+    var body = "Harkness Training runs live practice for hard conversations, with a professional actor who pushes back. Free Open Lab every three weeks: https://harknesstraining.com";
+    var enc = encodeURIComponent;
+    var links = {
+      gmail: "https://mail.google.com/mail/?view=cm&fs=1&su=" + enc(subj) + "&body=" + enc(body),
+      outlook: "https://outlook.office.com/mail/deeplink/compose?subject=" + enc(subj) + "&body=" + enc(body),
+      mailto: "mailto:?subject=" + enc(subj) + "&body=" + enc(body)
+    };
+    menu.querySelectorAll("a[data-share-to]").forEach(function (a) { a.href = links[a.dataset.shareTo]; });
+    function show(on) { menu.hidden = !on; btn.setAttribute("aria-expanded", on ? "true" : "false"); }
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (navigator.share && matchMedia("(pointer:coarse)").matches) {
+        navigator.share({ title: subj, text: body.replace(/: https:\/\/harknesstraining\.com$/, "."), url: "https://harknesstraining.com" }).catch(function () {});
+        return;
+      }
+      show(menu.hidden);
+    });
+    menu.addEventListener("click", function (e) {
+      var it = e.target.closest("[data-share-to]"); if (!it) return;
+      if (it.dataset.shareTo === "copy") {
+        var done = function () { note.textContent = "Link copied. Paste it into a message to your manager."; };
+        var fail = function () { note.textContent = "Copy this link: https://harknesstraining.com"; };
+        try { navigator.clipboard.writeText(subj + "\n\n" + body).then(done, fail); } catch (_) { fail(); }
+      }
+      show(false);
+    });
+    document.addEventListener("click", function (e) { if (!menu.hidden && !e.target.closest(".share-wrap")) show(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { show(false); btn.focus(); } });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

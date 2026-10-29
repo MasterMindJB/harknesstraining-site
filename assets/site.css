@@ -1074,3 +1074,73 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 #open-lab{position:relative}
 #open-lab .anchor-alias{position:absolute;top:0;left:0}
 #open-lab .open-lede{margin-top:16px;max-width:64ch;text-wrap:pretty;font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--ink)}
+
+/* rev 39: hover-to-open pricing, testimonial, FAQ, share menu, hover states */
+.tally-body{display:grid;grid-template-rows:1fr;transition:grid-template-rows .4s cubic-bezier(.2,.7,.2,1)}
+.tally-in{min-height:0;overflow:hidden}
+.tally.collapsible .tally-body{grid-template-rows:0fr}
+.tally.collapsible.open .tally-body{grid-template-rows:1fr}
+.tally.collapsible .tally-head{cursor:pointer;transition:border-color .2s ease,box-shadow .2s ease}
+.tally.collapsible:not(.open) .tally-head:hover{border-color:var(--sky);box-shadow:0 10px 26px -18px rgba(0,0,0,.45)}
+.tally-cue{display:none}
+.tally.collapsible .tally-cue{display:inline-flex;align-items:center;gap:8px;margin-left:auto;background:none;border:0;padding:4px 0;cursor:pointer;
+  font-family:var(--display);font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.tally-cue i{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);transition:transform .25s ease}
+.tally.open .tally-cue i{transform:rotate(-135deg) translate(-2px,-2px)}
+.tally-cue .cue-hide,.tally.open .tally-cue .cue-show{display:none}
+.tally.open .tally-cue .cue-hide{display:inline}
+.tally-cue:hover{text-decoration:underline;text-underline-offset:3px}
+
+.quote-card{max-width:880px;margin:36px auto 0;display:grid;grid-template-columns:76px 1fr;gap:20px;align-items:start;padding:22px 24px;border-radius:8px;
+  border:1px solid color-mix(in srgb,var(--on-navy) 18%,transparent);background:color-mix(in srgb,var(--on-navy) 5%,transparent);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.qc-photo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid var(--sky);transition:transform .2s ease}
+.qc-body{min-width:0}
+.quote-card blockquote{margin:0}
+.quote-card blockquote p{font-size:1.1rem;line-height:1.6;color:var(--on-navy);text-wrap:pretty}
+.quote-card strong{font-weight:700;color:var(--sky)}
+.quote-card figcaption{margin-top:12px;color:var(--on-navy-muted);font-size:.92rem}
+.quote-card figcaption b{color:var(--on-navy);font-weight:600}
+@media (max-width:560px){.quote-card{grid-template-columns:1fr;gap:14px;padding:20px}.qc-photo{width:64px;height:64px}}
+
+.faq-sec{background:var(--bg)}
+.faq{margin-top:28px;display:grid;gap:10px;max-width:820px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:6px;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 18px;font-weight:600;color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:1.3rem;line-height:1;color:var(--blue);transition:transform .2s ease}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details:hover{border-color:var(--sky);box-shadow:0 10px 24px -18px rgba(0,0,0,.4)}
+.faq details[open]{border-color:var(--blue)}
+.faq details p{padding:0 18px 16px;color:var(--muted);max-width:68ch}
+
+.share-wrap{position:relative;display:inline-block}
+.share-btn{font:inherit;background:none;border:0;padding:0;cursor:pointer;color:#D42A1C;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-color:currentColor}
+.share-btn:hover{text-decoration-thickness:2px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .share-btn{color:#FF6F61}}
+:root[data-theme="dark"] .share-btn{color:#FF6F61}
+.share-menu{position:absolute;left:0;top:calc(100% + 8px);z-index:20;min-width:180px;display:flex;flex-direction:column;padding:6px;border-radius:6px;
+  background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(0,0,0,.45)}
+.share-menu a,.share-menu button{font:inherit;font-size:.95rem;text-align:left;padding:8px 12px;border-radius:4px;border:0;background:none;color:var(--ink);text-decoration:none;cursor:pointer}
+.share-menu a:hover,.share-menu button:hover,.share-menu a:focus-visible,.share-menu button:focus-visible{background:color-mix(in srgb,var(--blue) 10%,transparent);color:var(--blue)}
+.share-note{display:block;margin-top:6px;font-size:.88rem;color:var(--muted)}
+.share-note:empty{display:none}
+
+/* hover states: small, quick, never moving the layout */
+.bubble{transition:translate .2s ease,box-shadow .2s ease}
+.date{transition:border-color .2s ease,box-shadow .2s ease,translate .2s ease}
+.light .date:hover{border-color:var(--sky);box-shadow:0 12px 28px -20px rgba(0,0,0,.4)}
+.light .date.next:hover{border-color:var(--amber)}
+.session{transition:background .2s ease}
+.light .session:hover{background:color-mix(in srgb,var(--sky) 10%,var(--bg))}
+.field input:hover,.field textarea:hover{border-color:var(--sky)}
+.stepper input:hover{border-color:var(--sky)}
+.save{transition:border-color .2s ease}
+.save:hover{border-color:var(--amber)}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .bubble:hover{translate:0 -3px;box-shadow:0 26px 48px -20px rgba(0,0,0,.7)}
+  .light .date:hover{translate:0 -2px}
+  .quote-card:hover{transform:translateY(-3px);border-color:var(--sky);box-shadow:0 16px 34px -18px rgba(0,0,0,.55)}
+  .quote-card:hover .qc-photo{transform:scale(1.04)}
+  .faq details:hover{transform:translateY(-1px)}
+}
