@@ -141,6 +141,26 @@ HTS.sendForm = function (form, extra) {
   }).then(function (r) { if (!r.ok) throw new Error(); done(); }).catch(fail);
 };
 
+/* required fields: name and a real-looking email before anything sends */
+HTS.checkForm = function (form) {
+  var first = null;
+  form.querySelectorAll("[required]").forEach(function (el) {
+    var v = (el.value || "").trim();
+    var good = v !== "" && (el.type !== "email" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+    el.setAttribute("aria-invalid", good ? "false" : "true");
+    if (!good && !first) first = el;
+    if (!el.dataset.checkWired) {
+      el.dataset.checkWired = "1";
+      el.addEventListener("input", function () { if (el.getAttribute("aria-invalid") === "true") el.setAttribute("aria-invalid", "false"); });
+    }
+  });
+  if (!first) return true;
+  var st = form.querySelector(".form-status");
+  if (st) { st.textContent = first.type === "email" ? "Please add a valid work email." : "Please add your name and work email."; st.className = "form-status err"; }
+  first.focus();
+  return false;
+};
+
 /* ---------------- wire up every page ---------------- */
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-demo]").forEach(function (a) { a.href = HTS.demoBooking; a.target = "_blank"; a.rel = "noopener"; });
@@ -479,6 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("form[data-hts]").forEach(function (f) {
     f.addEventListener("submit", function (ev) {
       ev.preventDefault();
+      if (!HTS.checkForm(f)) return;
       HTS.sendForm(f, typeof f.htsExtra === "function" ? f.htsExtra() : null);
     });
   });
