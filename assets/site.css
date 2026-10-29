@@ -1151,3 +1151,10 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 @media (min-width:561px){.vpath .tot{min-width:11rem}.vpath li.key .tot{padding-right:0}}
 /* rev 41: pricing and FAQ use the full content width, lined up with the Open Lab dates above */
 .tally,#programs .cta-row,.price-cta,.estimate-inline,.faq{max-width:none}
+/* rev 42: blueprint texture a little brighter, still behind the content */
+:root{--bp-o:.09}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bp-o:.12}}
+:root[data-theme="dark"]{--bp-o:.12}
+.hero::after{opacity:.2}
+.takes-sec::before{opacity:.15}
+footer.site-foot::before{opacity:.11}
