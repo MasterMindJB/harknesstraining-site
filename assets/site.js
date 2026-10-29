@@ -1,10 +1,10 @@
 /* ============================================================
    HARKNESS TRAINING SOLUTIONS — SITE CONFIG
-   Every external link and the Open Night schedule live here.
+   Every external link and the Open Lab schedule live here.
    Paste a link between the quotes and save; nothing else to edit.
    ============================================================ */
 var HTS = {
-  // Luma calendar or event page for Open Night registration.
+  // Luma calendar or event page for Open Lab registration.
   // Empty = "Save a seat" buttons open an email to hello@ instead.
   luma: "",
 
@@ -33,7 +33,7 @@ var HTS = {
   email: "hello@harknesstraining.com",
   phone: "(310) 896-5379",
 
-  // Open Night: every 3 weeks from the first date, two sessions each day.
+  // Open Lab: every 3 weeks from the first date, two sessions each day.
   openNight: {
     first: "2026-10-29",        // a Thursday
     everyWeeks: 3,
@@ -41,8 +41,8 @@ var HTS = {
     skip: ["2026-12-31"],       // dates to drop (holiday week)
     online:   { label: "Online",    time: "12:00–1:30 PM", where: "Link sent after registration" },
     inPerson: { label: "In person", time: "6:00–7:30 PM",  where: "El Segundo · details sent after registration" },
-    // In person: the first Open Night of each month, starting from this date.
-    // Every other Open Night is online only.
+    // In person: the first Open Lab of each month, starting from this date.
+    // Every other Open Lab is online only.
     inPersonFrom: "2026-12-01"
   }
 };
@@ -65,11 +65,11 @@ HTS.fmtDate = function (d, long) {
 HTS.registerLink = function (d, s) {
   if (HTS.luma) return HTS.luma;
   return "#register";
-  var subj = "Open Night seat: " + HTS.fmtDate(d.date, true) + " (" + s.label.toLowerCase() + ", " + s.time + ")";
+  var subj = "Open Lab seat: " + HTS.fmtDate(d.date, true) + " (" + s.label.toLowerCase() + ", " + s.time + ")";
   var body = "Name:\nCompany:\nRole:\nThe conversation I want to practice:\nIs your manager or a leader coming to watch?\n";
   return "mailto:" + HTS.email + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
 };
-/* in person: the first scheduled Open Night of each month, from inPersonFrom on */
+/* in person: the first scheduled Open Lab of each month, from inPersonFrom on */
 HTS.hasInPerson = function (iso) {
   var o = HTS.openNight;
   if (!o.inPersonFrom || iso < o.inPersonFrom) return false;
@@ -416,10 +416,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* phone bar: the next step stays under the thumb once you scroll past the hero */
   (function () {
-    var onEvents = !!document.getElementById("open-night");
+    var onEvents = !!document.getElementById("open-lab");
     var bar = document.createElement("nav");
     bar.className = "mbar"; bar.setAttribute("aria-label", "Next step");
-    bar.innerHTML = '<a class="btn btn-hot" href="' + (onEvents ? "#open-night" : "index.html#open-night") + '">Save a seat</a>' +
+    bar.innerHTML = '<a class="btn btn-hot" href="' + (onEvents ? "#open-lab" : "index.html#open-lab") + '">Save a seat</a>' +
                     (document.getElementById("book") ? '<a class="btn btn-blue" href="#book">Pick a time</a>' : '<a class="btn btn-blue" href="demo.html">Book a demo</a>');
     document.body.appendChild(bar);
     function check() {
@@ -444,8 +444,8 @@ document.addEventListener("DOMContentLoaded", function () {
     dlg.innerHTML =
       '<form class="form" data-hts data-ok="You\'re in. We\'ll email the details within a day." novalidate>' +
       '<button type="button" class="reg-x" aria-label="Close">×</button>' +
-      '<p class="eyebrow">Save a seat · free</p><h3 class="reg-h">Open Night</h3><p class="reg-when" data-reg-when></p>' +
-      '<input type="hidden" name="_subject" value="Open Night registration"><input type="hidden" name="session" data-reg-session>' +
+      '<p class="eyebrow">Save a seat · free</p><h3 class="reg-h">Open Lab</h3><p class="reg-when" data-reg-when></p>' +
+      '<input type="hidden" name="_subject" value="Open Lab registration"><input type="hidden" name="session" data-reg-session>' +
       '<div class="row"><div class="field"><label for="reg-name">Name</label><input id="reg-name" name="name" autocomplete="name" required></div>' +
       '<div class="field"><label for="reg-email">Work email</label><input id="reg-email" name="email" type="email" autocomplete="email" required></div></div>' +
       '<div class="row"><div class="field"><label for="reg-co">Company</label><input id="reg-co" name="company" autocomplete="organization"></div>' +

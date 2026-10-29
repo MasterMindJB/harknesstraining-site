@@ -1069,3 +1069,8 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 }
 /* rev 37: lead verbs in the method line */
 .hero .pos-2 strong{font-weight:600;color:var(--on-navy)}
+
+/* rev 38: Open Lab invite line */
+#open-lab{position:relative}
+#open-lab .anchor-alias{position:absolute;top:0;left:0}
+#open-lab .open-lede{margin-top:16px;max-width:64ch;text-wrap:pretty;font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--ink)}

@@ -5,22 +5,22 @@ Six pages, one stylesheet, two scripts. No build step: upload this folder as-is 
 | Page | File | Live address |
 | --- | --- | --- |
 | Home | `index.html` | harknesstraining.com |
-| Open Night | `open-night.html` | harknesstraining.com/open-night |
+| Open Lab | `open-night.html` | harknesstraining.com/open-night |
 | Pricing | `pricing.html` | harknesstraining.com/pricing |
 | Book a demo | `demo.html` | harknesstraining.com/demo |
 | Custom programs | `custom.html` | harknesstraining.com/custom |
-| After Open Night (QR code) | `next.html` | harknesstraining.com/next |
+| After Open Lab (QR code) | `next.html` | harknesstraining.com/next |
 
 ## The one place to edit: `assets/site.js`
 
-The top of the file holds every link and the Open Night schedule.
+The top of the file holds every link and the Open Lab schedule.
 
 - `luma`: optional. Until it is set, "Save a seat" opens a short registration form on the page (sent through Formspree). Paste a Luma calendar link to send people to Luma instead.
 - `formspree`: paste the Formspree form ID (the part after `formspree.io/f/`). Until then, forms open an email to hello@ with the details filled in.
 - `social`: LinkedIn, YouTube and X links. An icon only appears once its link is filled in.
 - `demoBooking`: the Google Calendar booking link (already set).
 - `demoEmbed`: optional. In Google Calendar, open the appointment schedule, choose Share → Website embed → Inline, and paste the long URL (it ends in `?gv=true`). The demo page then shows the calendar on the page.
-- `openNight`: first date (Oct 29), every 3 weeks, 4 upcoming dates shown. Every Open Night has an online session (12:00–1:30 PM). From `inPersonFrom` (Dec 1, 2026) the first Open Night of each month also has an in-person session (6:00–7:30 PM in El Segundo; the address goes out after registration). Past dates drop off automatically. To cancel a date, add it to `skip`, e.g. `skip: ["2026-12-31"]`.
+- `openNight`: first date (Oct 29), every 3 weeks, 4 upcoming dates shown. Every Open Lab has an online session (12:00–1:30 PM). From `inPersonFrom` (Dec 1, 2026) the first Open Lab of each month also has an in-person session (6:00–7:30 PM in El Segundo; the address goes out after registration). Past dates drop off automatically. To cancel a date, add it to `skip`, e.g. `skip: ["2026-12-31"]`.
 
 ## Share preview, icon and phone bar
 
@@ -38,7 +38,7 @@ Use the same questions on each event:
 
 ## Formspree
 
-One form handles all five site forms (Open Night registration, contact, the pricing estimate, custom program inquiries, after-Open-Night). Each submission arrives with a subject line saying which form it came from. To also send the estimate to the buyer automatically, turn on Formspree's autoresponse (a paid plan feature); otherwise reply by hand.
+One form handles all five site forms (Open Lab registration, contact, the pricing estimate, custom program inquiries, after-Open-Night). Each submission arrives with a subject line saying which form it came from. To also send the estimate to the buyer automatically, turn on Formspree's autoresponse (a paid plan feature); otherwise reply by hand.
 
 ## Go live
 
