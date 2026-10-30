@@ -1229,3 +1229,7 @@ footer.site-foot::before{opacity:.11}
 .stoic p{font-family:var(--display);font-weight:700;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.15;color:var(--ink);text-wrap:balance}
 .quote-card .qc-before{color:var(--on-navy-muted)}
 .h-level{max-width:none}
+/* rev 45: cards show who + the line only */
+.dc-face{min-height:156px}
+.dc-front{background-position:0 34px}
+.dc-front .dc-who{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#7A6A44}
