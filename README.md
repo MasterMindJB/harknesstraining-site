@@ -50,3 +50,7 @@ One form handles all five site forms (Open Lab registration, contact, the pricin
 6. Remove any old pages that still carry child-welfare copy.
 7. From a personal email account, test: each Save a seat button, Book a demo, the contact form, and the estimate form.
 8. Point the QR code on the 4×6 card at `https://harknesstraining.com/next`.
+
+## Browser caching
+
+Pages load `assets/site.css?v=N` and `assets/site.js?v=N`. After changing either file, raise `N` in all four pages (index, demo, custom, next) so returning visitors get the new version instead of a stale copy.
