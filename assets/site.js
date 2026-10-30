@@ -247,8 +247,10 @@ document.addEventListener("DOMContentLoaded", function () {
   var openEst = document.querySelector("[data-open-estimate]"), estForm = document.getElementById("estimate");
   if (openEst && estForm) {
     function reveal() {
+      var tb = document.querySelector("[data-tally]"), wasShut = tb && tb.querySelector(".tally-body") && !tb.classList.contains("open");
+      if (wasShut) { tb.classList.add("open"); var cue = tb.querySelector(".tally-cue"); if (cue) cue.setAttribute("aria-expanded", "true"); }
       estForm.hidden = false; openEst.setAttribute("aria-expanded", "true");
-      estForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      setTimeout(function () { estForm.scrollIntoView({ behavior: "smooth", block: "center" }); }, wasShut ? 650 : 0);
       setTimeout(function () { var f = estForm.querySelector("input:not([type=hidden])"); if (f) f.focus({ preventScroll: true }); }, 350);
     }
     openEst.addEventListener("click", reveal);
@@ -652,6 +654,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.addEventListener("click", function (e) { if (!menu.hidden && !e.target.closest(".share-wrap")) show(false); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { show(false); btn.focus(); } });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
+
+/* rev 43: hero rotators (consequence and verb) and the function cards */
+(function () {
+  var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function init() {
+    document.querySelectorAll(".cyc[data-cycle]").forEach(function (el) {
+      var words = el.dataset.cycle.split("|"), dot = el.dataset.dot || "", i = 0, inner = el.firstElementChild;
+      var inline = !el.classList.contains("cyc-red");
+      function measure(t) {
+        var p = document.createElement("span"); p.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
+        p.textContent = t; el.appendChild(p); var w = p.getBoundingClientRect().width; el.removeChild(p); return Math.ceil(w);
+      }
+      function fit() { if (inline) el.style.width = measure(inner.textContent) + "px"; }
+      fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+      window.addEventListener("resize", function () { if (inline) el.style.width = measure(inner.textContent) + "px"; });
+      if (still) return;
+      function step() {
+        i = (i + 1) % words.length;
+        inner.classList.add("cyc-out");
+        setTimeout(function () {
+          inner.textContent = words[i] + dot;
+          if (inline) el.style.width = measure(inner.textContent) + "px";
+          inner.classList.remove("cyc-out"); inner.classList.add("cyc-pre");
+          void inner.offsetWidth; inner.classList.remove("cyc-pre");
+        }, 350);
+      }
+      setTimeout(function () { step(); setInterval(step, 2600); }, 2600 + (+el.dataset.offset || 0));
+    });
+
+    // function cards: hover flips on desktop; on touch the first tap flips, the second opens Custom
+    var touch = window.matchMedia && matchMedia("(hover: none)").matches;
+    document.querySelectorAll(".deck .dcard").forEach(function (c, _, all) {
+      c.addEventListener("click", function (e) {
+        if (!touch || c.classList.contains("flip")) return;
+        e.preventDefault();
+        Array.prototype.forEach.call(all, function (o) { o.classList.remove("flip"); });
+        c.classList.add("flip");
+      });
+    });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

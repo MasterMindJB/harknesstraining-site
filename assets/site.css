@@ -1158,3 +1158,60 @@ main>section.creed::before{background-image:url("blueprint.svg")!important;opaci
 .hero::after{opacity:.2}
 .takes-sec::before{opacity:.15}
 footer.site-foot::before{opacity:.11}
+
+/* rev 43: walkthrough changes (Oct 29 night) */
+/* hero: rotating consequence under "Mishandled conversations", rotating verb in the line below */
+.cyc{display:inline-block;position:relative;white-space:nowrap;vertical-align:bottom;transition:width .45s cubic-bezier(.3,.7,.2,1)}
+.cyc>span{display:inline-block;transition:opacity .35s ease,transform .35s ease}
+.cyc>span.cyc-out{opacity:0;transform:translateY(-.25em)}
+.cyc>span.cyc-pre{opacity:0;transform:translateY(.25em);transition:none}
+.hero h1.h-cyc .cyc-red{display:block;color:var(--red)}
+.hero .pos .cyc-verb{color:var(--amber);text-align:left;margin-right:.08em}
+@media (prefers-reduced-motion:reduce){.cyc,.cyc>span{transition:none}}
+
+/* "At a certain level": a desk of 4x6 cards, one per business function */
+.h-level{max-width:22ch}
+.deck-hint{margin-top:14px;color:var(--muted);font-size:.95rem}
+.deck-hint .hint-touch{display:none}
+@media (hover:none){.deck-hint .hint-hover{display:none}.deck-hint .hint-touch{display:inline}}
+.deck{margin-top:32px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 18px;perspective:1400px}
+@media (max-width:980px){.deck{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.deck{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 4px 18px;margin-inline:-4px;scrollbar-width:thin}
+  .deck .dcard{flex:0 0 80%;scroll-snap-align:center}}
+.dcard{display:block;text-decoration:none;color:inherit;transform:rotate(var(--r,0deg));transition:transform .35s cubic-bezier(.2,.8,.3,1),filter .35s ease;outline:none}
+.dc-in{display:grid;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
+.dc-face{grid-area:1/1;display:flex;flex-direction:column;gap:10px;min-height:196px;padding:16px 18px;border-radius:6px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 18px 34px -20px rgba(0,0,0,.55)}
+.dc-front{background:var(--card);color:#1B1B1B;background-image:repeating-linear-gradient(to bottom,transparent 0 27px,var(--card-line) 27px 28px);background-position:0 40px}
+.dc-back{background:var(--navy);color:var(--on-navy);transform:rotateY(180deg);border:1px solid color-mix(in srgb,var(--sky) 45%,transparent)}
+.dc-fn{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#7A6A44}
+.dc-back .dc-fn{color:var(--amber)}
+.dc-who{font-size:.82rem;font-weight:600;color:#6B5E3C;line-height:1.35}
+.dc-line{font-weight:600;font-size:1.02rem;line-height:1.35}
+.dc-prob{font-size:.98rem;line-height:1.5;color:var(--on-navy)}
+.dc-go{margin-top:auto;font-family:var(--display);font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sky)}
+.dc-go i{font-style:normal;display:inline-block;transition:transform .25s ease}
+.dcard:hover,.dcard:focus-visible,.dcard.flip{transform:rotate(0deg) translateY(-6px);z-index:2;position:relative}
+.dcard:hover .dc-in,.dcard:focus-visible .dc-in,.dcard.flip .dc-in{transform:rotateY(180deg)}
+.dcard:hover .dc-go i,.dcard:focus-visible .dc-go i{transform:translateX(4px)}
+.dcard:focus-visible .dc-back{outline:3px solid var(--sky);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.dcard,.dc-in{transition:none}}
+
+/* how it works: the actor's behaviors as tags that light up in turn */
+.pb-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.flow .pb-tags .pb-t{display:inline-block;width:auto;height:auto;font-size:.78rem;line-height:1.2;padding:.3em .6em;border-radius:999px;border:1px solid color-mix(in srgb,var(--amber) 55%,transparent);color:var(--ink);background:color-mix(in srgb,var(--amber) 10%,transparent);transition:background .3s ease,transform .3s ease}
+.flow.live li.hot:hover .pb-tags .pb-t,.flow.live li.hot.focus .pb-tags .pb-t{animation:tagPulse 2.4s ease infinite}
+.pb-tags .pb-t:nth-child(2){animation-delay:.2s!important}.pb-tags .pb-t:nth-child(3){animation-delay:.4s!important}.pb-tags .pb-t:nth-child(4){animation-delay:.6s!important}.pb-tags .pb-t:nth-child(5){animation-delay:.8s!important}
+.pb-tags .pb-t:nth-child(6){animation-delay:1s!important}.pb-tags .pb-t:nth-child(7){animation-delay:1.2s!important}.pb-tags .pb-t:nth-child(8){animation-delay:1.4s!important}.pb-tags .pb-t:nth-child(9){animation-delay:1.6s!important}.pb-tags .pb-t:nth-child(10){animation-delay:1.8s!important}
+@keyframes tagPulse{0%,100%{background:color-mix(in srgb,var(--amber) 10%,transparent)}12%{background:var(--amber);color:#1B1606}24%{background:color-mix(in srgb,var(--amber) 10%,transparent)}}
+@media (prefers-reduced-motion:reduce){.flow.live li.hot:hover .pb-tags .pb-t{animation:none}}
+
+/* pricing opens gently: height eases, content fades in, rows arrive one after another */
+.tally.collapsible .tally-body{transition:grid-template-rows .75s cubic-bezier(.25,.8,.25,1)}
+.tally.collapsible .tally-in{opacity:0;transform:translateY(-8px);transition:opacity .45s ease,transform .55s cubic-bezier(.25,.8,.25,1)}
+.tally.collapsible.open .tally-in{opacity:1;transform:none;transition-delay:.12s}
+.tally.collapsible.open .vpath li{animation:rowIn .5s cubic-bezier(.25,.8,.25,1) both}
+.tally.collapsible.open .vpath li:nth-child(1){animation-delay:.15s}.tally.collapsible.open .vpath li:nth-child(2){animation-delay:.22s}
+.tally.collapsible.open .vpath li:nth-child(3){animation-delay:.29s}.tally.collapsible.open .vpath li:nth-child(4){animation-delay:.36s}
+.tally.collapsible.open .vpath li:nth-child(5){animation-delay:.43s}
+@keyframes rowIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.tally.collapsible .tally-body,.tally.collapsible .tally-in{transition:none}.tally.collapsible.open .vpath li{animation:none}}
