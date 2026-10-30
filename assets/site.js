@@ -43,21 +43,30 @@ var HTS = {
     inPerson: { label: "In person", time: "6:00–7:30 PM PT",  where: "El Segundo · details sent after registration" },
     // In person: the first Open Lab of each month, starting from this date.
     // Every other Open Lab is online only.
-    inPersonFrom: "2026-12-01"
+    inPersonFrom: "2026-12-01",
+    // One-off moves, scheduled date -> new date. The 3-week cadence carries on unchanged.
+    // January's Open Lab moved up from Jan 21 to Jan 7, 2027 (decided Oct 30, 2026).
+    move: { "2027-01-21": "2027-01-07" },
+    // Dates that are online only, even if they'd be the month's in-person session.
+    onlineOnly: ["2027-01-07"]
   }
 };
 
 /* ---------------- schedule ---------------- */
-HTS.dates = function (count) {
-  var o = HTS.openNight, out = [], d = new Date(o.first + "T12:00:00");
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  for (var i = 0; out.length < count && i < 60; i++) {
-    var iso = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-    var end = new Date(iso + "T23:59:00");
-    if (end >= today && o.skip.indexOf(iso) === -1) out.push({ iso: iso, date: new Date(d) });
+/* every scheduled Open Lab, in order: a 3-week series from `first`, minus `skip`, with `move` applied */
+HTS.allDates = function () {
+  var o = HTS.openNight, mv = o.move || {}, out = [], d = new Date(o.first + "T12:00:00");
+  function iso(x) { return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); }
+  for (var i = 0; i < 80; i++) {
+    var x = iso(d);
+    if (o.skip.indexOf(x) === -1) { var y = mv[x] || x; out.push({ iso: y, date: new Date(y + "T12:00:00") }); }
     d.setDate(d.getDate() + 7 * o.everyWeeks);
   }
-  return out;
+  return out.sort(function (p, q) { return p.iso < q.iso ? -1 : p.iso > q.iso ? 1 : 0; });
+};
+HTS.dates = function (count) {
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  return HTS.allDates().filter(function (d) { return new Date(d.iso + "T23:59:00") >= today; }).slice(0, count);
 };
 HTS.fmtDate = function (d, long) {
   return d.toLocaleDateString("en-US", { weekday: long ? "long" : "short", month: "short", day: "numeric" });
@@ -73,14 +82,10 @@ HTS.registerLink = function (d, s) {
 HTS.hasInPerson = function (iso) {
   var o = HTS.openNight;
   if (!o.inPersonFrom || iso < o.inPersonFrom) return false;
-  var d = new Date(o.first + "T12:00:00");
-  for (var i = 0; i < 120; i++) {
-    var x = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-    if (x.slice(0, 7) === iso.slice(0, 7) && o.skip.indexOf(x) === -1) return x === iso;
-    if (x > iso) return false;
-    d.setDate(d.getDate() + 7 * o.everyWeeks);
-  }
-  return false;
+  if ((o.onlineOnly || []).indexOf(iso) !== -1) return false;
+  var all = HTS.allDates(), first = null;
+  for (var i = 0; i < all.length; i++) { if (all[i].iso.slice(0, 7) === iso.slice(0, 7)) { first = all[i].iso; break; } }
+  return first === iso;
 };
 HTS.renderSchedule = function (el) {
   var n = parseInt(el.getAttribute("data-count") || HTS.openNight.show, 10);
