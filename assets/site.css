@@ -1233,3 +1233,5 @@ footer.site-foot::before{opacity:.11}
 .dc-face{min-height:156px}
 .dc-front{background-position:0 34px}
 .dc-front .dc-who{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#7A6A44}
+/* rev 46: on phones, size the headline so the longest rotating phrase ("damage reputations.") fits */
+@media (max-width:639px){.hero h1.h-rotl{font-size:calc((100vw - 32px) / 12)}}
