@@ -717,6 +717,23 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.matchMedia("(max-width: 600px)").matches) {
       v.poster = v.poster.replace("hts-session-loop-poster", "hts-session-loop-4x5-poster");
     }
+    var sawPlay = false, sawEnd = false, furthest = 0;
+    v.addEventListener("playing", function () {
+      if (sawPlay) return;
+      sawPlay = true;
+      htsEvent("session_video_play");
+    });
+    function markComplete() {
+      if (sawEnd) return;
+      sawEnd = true;
+      htsEvent("session_video_complete");
+    }
+    v.addEventListener("ended", markComplete);
+    v.addEventListener("timeupdate", function () {
+      if (sawEnd || !v.duration || !isFinite(v.duration)) return;
+      if (v.currentTime > furthest) furthest = v.currentTime;
+      if (furthest > v.duration - 0.5 && v.currentTime + 1 < furthest) markComplete();
+    });
     var inView = false;
     function load() {
       if (v.dataset.loaded) return;
@@ -759,4 +776,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
+
+/* rev 50: GA4 events. The gtag snippet lives in each page's head. If an ad
+   blocker stops it, these calls do nothing and the page still works. */
+function htsEvent(name, params) {
+  try {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, params || {});
+  } catch (e) {}
+}
+(function () {
+  var named = /^(save a seat|book a demo|book a 20-minute demo|try it free at open lab|pick a time|pick a time for a demo)$/i;
+  function labelOf(el) {
+    return (el.textContent || "").replace(/\s+/g, " ").trim();
+  }
+  function locationOf(el) {
+    if (el.closest(".mbar")) return "sticky bar";
+    if (el.closest("nav.tabs, .topbar nav")) return "nav";
+    if (el.closest(".topbar")) return "header";
+    if (el.closest("footer")) return "footer";
+    if (el.closest(".hero")) return "hero";
+    var sec = el.closest("section");
+    if (!sec) return "page";
+    if (sec.id) return sec.id;
+    var eye = sec.querySelector(".eyebrow");
+    if (eye) return eye.textContent.replace(/\s+/g, " ").trim().toLowerCase();
+    return "page";
+  }
+  document.addEventListener("click", function (e) {
+    try {
+      var el = e.target && e.target.closest && e.target.closest("a, button");
+      if (!el) return;
+      var label = labelOf(el);
+      if (!el.hasAttribute("data-demo") && !named.test(label)) return;
+      htsEvent("cta_click", { label: label, location: locationOf(el) });
+    } catch (err) {}
+  });
 })();
