@@ -1235,3 +1235,8 @@ footer.site-foot::before{opacity:.11}
 .dc-front .dc-who{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#7A6A44}
 /* rev 46: on phones, size the headline so the longest rotating phrase ("damage reputations.") fits */
 @media (max-width:639px){.hero h1.h-rotl{font-size:calc((100vw - 32px) / 12)}}
+
+/* rev 48: silent session loop, directly under the hero */
+.session-vid .sv-frame{position:relative;margin:44px 0 0;border-radius:12px;overflow:hidden;background:var(--navy);aspect-ratio:16/9;box-shadow:0 24px 50px -28px rgba(28,44,91,.55),0 0 0 1px rgba(28,44,91,.08)}
+.session-vid .sv-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--navy)}
+@media (max-width:600px){.session-vid .sv-frame{aspect-ratio:4/5}}

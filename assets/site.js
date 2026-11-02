@@ -704,3 +704,59 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
+
+/* rev 48: silent session loop. Fetch once it is near the viewport, play while at
+   least half the frame is visible, pause when it scrolls away or the tab hides. */
+(function () {
+  function init() {
+    var v = document.querySelector("[data-hts-video]");
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    if (window.matchMedia("(max-width: 600px)").matches) {
+      v.poster = v.poster.replace("hts-session-loop-poster", "hts-session-loop-4x5-poster");
+    }
+    var inView = false;
+    function load() {
+      if (v.dataset.loaded) return;
+      v.dataset.loaded = "1";
+      v.querySelectorAll("source[data-src]").forEach(function (s) { s.src = s.dataset.src; });
+      v.load();
+    }
+    function play() {
+      load();
+      var p = v.play();
+      if (p && p.catch) p.catch(function (err) {
+        if (!err || err.name === "AbortError") return;
+        v.controls = true;
+      });
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      v.controls = true;
+      v.preload = "metadata";
+      v.autoplay = false;
+      load();
+      return;
+    }
+    if (!("IntersectionObserver" in window)) { play(); return; }
+    var pre = new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) { load(); pre.disconnect(); }
+    }, { rootMargin: "300px 0px" });
+    pre.observe(v);
+    var steps = [];
+    for (var i = 0; i <= 20; i++) steps.push(i / 20);
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        inView = e.intersectionRatio >= 0.5;
+        if (inView && !document.hidden) play();
+        else if (!v.paused) v.pause();
+      });
+    }, { threshold: steps }).observe(v);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) v.pause();
+      else if (inView) play();
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
