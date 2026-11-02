@@ -130,7 +130,12 @@ HTS.sendForm = function (form, extra) {
       nx.innerHTML = ' Want to talk sooner? <a href="demo.html">Pick a time for a demo</a>.';
       status.appendChild(nx);
     }
-    status.className = "form-status ok"; form.reset();
+    status.className = "form-status ok";
+    /* Open Lab sign-up is this on-page form, posted to the Google Sheet hook.
+       no-cors cannot read the response, so this is the same moment the page
+       says "You're in". A Luma link or the mailto fallback has no confirmation. */
+    if ((data._subject || "") === "Open Lab registration") htsEvent("seat_saved", { session: data.session || "" });
+    form.reset();
   }
   function fail() {
     status.textContent = "That didn't go through. Please email " + HTS.email + " instead.";
