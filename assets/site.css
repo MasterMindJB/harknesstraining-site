@@ -722,7 +722,7 @@ footer.site-foot::before{opacity:.08}
 
 /* 1 · self-typing prompt */
 .typer{margin-top:6px;display:flex;align-items:center;min-height:2.4em;padding:.5em .7em;border-radius:5px;border:1px solid var(--line);background:var(--surface);font-size:.86rem;color:var(--ink);font-family:var(--body);font-style:normal}
-.typer-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.typer-t{white-space:normal;overflow:visible;text-overflow:clip;min-width:0}
 .caret{width:2px;height:1.1em;background:var(--sky);margin-left:2px;flex:none;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
@@ -1242,9 +1242,37 @@ footer.site-foot::before{opacity:.11}
    to 104px) plus a full section padding-top before the eyebrow. Keep a short
    navy close under the buttons, then the eyebrow, so the frame meets a
    1440x900 fold. Other pages' heroes are unchanged. */
-.hero:has(+ .session-vid){padding-bottom:0}
-.hero:has(+ .session-vid) .hero-grid.solo{padding-bottom:32px}
+.hero:has(+ .session-vid),.hero:has(+ .logo-band){padding-bottom:0}
+.hero:has(+ .session-vid) .hero-grid.solo,.hero:has(+ .logo-band) .hero-grid.solo{padding-bottom:22px}
 .session-vid{padding-top:28px}
+.logo-band + .session-vid{padding-top:16px}
+
+/* logo band: grayscale wordmarks, slow marquee, tight under the hero */
+.logo-band{padding:18px 0 8px;background:var(--bg)}
+main>section.logo-band:not(.hero)::before{content:none}
+.logo-band h2{margin:0 0 14px;text-align:center;font-family:var(--body);font-weight:600;font-size:clamp(1.15rem,2vw,1.45rem);letter-spacing:-.01em;text-transform:none;line-height:1.3;color:var(--ink)}
+.logo-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.logo-track{display:flex;width:max-content;animation:logo-marquee 52s linear infinite}
+.logo-marquee:hover .logo-track,.logo-marquee:focus-within .logo-track{animation-play-state:paused}
+.logo-set{display:flex;align-items:center;gap:54px;margin:0;padding:6px 27px 6px 0;list-style:none}
+.logo-set li{display:flex;align-items:center;flex:none}
+.logo-set img{display:block;height:28px;width:auto;filter:brightness(0) opacity(.58)}
+.logo-set img.logo-tall{height:36px}
+.logo-word{font-family:var(--body);font-weight:600;font-size:.95rem;letter-spacing:.01em;line-height:1;color:#6A7386;white-space:nowrap}
+@keyframes logo-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:600px){
+  .logo-band{padding-top:14px}
+  .logo-band h2{margin-bottom:10px;font-size:1.05rem}
+  .logo-set{gap:36px;padding-right:18px}
+  .logo-set img{height:22px}
+  .logo-set img.logo-tall{height:28px}
+  .logo-word{font-size:.84rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .logo-track{animation:none}
+  .logo-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .logo-set[aria-hidden="true"]{display:none}
+}
 .session-vid .sv-frame{position:relative;margin:24px 0 0;border-radius:12px;overflow:hidden;background:var(--navy);aspect-ratio:16/9;box-shadow:0 24px 50px -28px rgba(28,44,91,.55),0 0 0 1px rgba(28,44,91,.08)}
 .session-vid .sv-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--navy)}
 @media (max-width:600px){.session-vid .sv-frame{aspect-ratio:4/5}}
