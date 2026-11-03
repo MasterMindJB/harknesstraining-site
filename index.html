@@ -15,6 +15,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Train new engineering managers at South Bay aerospace, space, and defense companies to handle high-stakes conversations. Learn, practice, feedback. El Segundo.">
 <link rel="canonical" href="https://harknesstraining.com/">
+<link rel="alternate" type="text/plain" href="https://harknesstraining.com/llms.txt" title="Plain-language summary of Harkness Training Solutions">
 <meta name="theme-color" content="#1C2C5B">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -46,8 +47,12 @@
       "@type": "Organization",
       "@id": "https://harknesstraining.com/#organization",
       "name": "Harkness Training Solutions",
-      "alternateName": "Harkness Training",
+      "alternateName": [
+        "Harkness Training",
+        "HTS"
+      ],
       "url": "https://harknesstraining.com/",
+      "description": "Practice-under-pressure training that helps leaders rehearse hard conversations before they are real. Mishandled conversations cost teams trust, talent, and time.",
       "email": "hello@harknesstraining.com",
       "telephone": "+13108965379",
       "logo": {
@@ -59,7 +64,8 @@
       "sameAs": [
         "https://www.linkedin.com/company/144037123",
         "https://www.youtube.com/@harknesstraining",
-        "https://x.com/harknesstrainin"
+        "https://x.com/harknesstrainin",
+        "https://www.instagram.com/harknesstraining"
       ]
     },
     {
@@ -78,11 +84,22 @@
         "addressCountry": "US"
       },
       "areaServed": [
-        { "@type": "City", "name": "El Segundo" },
-        { "@type": "AdministrativeArea", "name": "South Bay" },
-        { "@type": "City", "name": "Los Angeles" }
+        {
+          "@type": "City",
+          "name": "El Segundo"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "South Bay"
+        },
+        {
+          "@type": "City",
+          "name": "Los Angeles"
+        }
       ],
-      "parentOrganization": { "@id": "https://harknesstraining.com/#organization" }
+      "parentOrganization": {
+        "@id": "https://harknesstraining.com/#organization"
+      }
     },
     {
       "@type": "Event",
@@ -93,7 +110,9 @@
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "isAccessibleForFree": true,
-      "organizer": { "@id": "https://harknesstraining.com/#organization" },
+      "organizer": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
       "location": {
         "@type": "VirtualLocation",
         "url": "https://harknesstraining.com/open-lab"
@@ -108,7 +127,9 @@
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "isAccessibleForFree": true,
-      "organizer": { "@id": "https://harknesstraining.com/#organization" },
+      "organizer": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
       "location": {
         "@type": "VirtualLocation",
         "url": "https://harknesstraining.com/open-lab"
@@ -123,7 +144,9 @@
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "isAccessibleForFree": true,
-      "organizer": { "@id": "https://harknesstraining.com/#organization" },
+      "organizer": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
       "location": {
         "@type": "Place",
         "name": "El Segundo",
@@ -144,11 +167,306 @@
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "isAccessibleForFree": true,
-      "organizer": { "@id": "https://harknesstraining.com/#organization" },
+      "organizer": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
       "location": {
         "@type": "VirtualLocation",
         "url": "https://harknesstraining.com/open-lab"
       }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-open-lab",
+      "name": "Open Lab",
+      "serviceType": "Difficult conversation practice",
+      "description": "A free 90-minute session. Bring one conversation you are dreading, or watch. Learn a simple storytelling framework, practice it with an improv actor, and hear how it landed from peers.",
+      "url": "https://harknesstraining.com/open-lab",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "El Segundo"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "South Bay"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "name": "Open Lab",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://harknesstraining.com/open-lab",
+        "description": "Free. 90 minutes. Online at 12:00–1:30 PM Pacific, and once a month in person in El Segundo at 6:00–7:30 PM Pacific."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-demo",
+      "name": "Team demo",
+      "serviceType": "Difficult conversation practice",
+      "description": "A free 20-minute demo for teams that want to see the practice before a Kickoff.",
+      "url": "https://harknesstraining.com/demo",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Team demo",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://harknesstraining.com/demo",
+        "description": "Free. 20 minutes."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-kickoff",
+      "name": "Kickoff",
+      "serviceType": "Difficult conversation practice",
+      "description": "One 75-minute session for a team. The fee is credited in full toward the Pilot.",
+      "url": "https://harknesstraining.com/#programs",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Kickoff",
+        "price": "150",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31",
+        "url": "https://harknesstraining.com/#programs",
+        "description": "$150 per person. One 75-minute session, credited in full toward the Pilot. Founding rate for teams that start by Dec 31, 2026. Teams of 15 to 20 people get 10% off."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-pilot",
+      "name": "Pilot",
+      "serviceType": "Difficult conversation practice",
+      "description": "Three sessions over weeks 1–3.",
+      "url": "https://harknesstraining.com/#programs",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Pilot",
+        "price": "650",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31",
+        "url": "https://harknesstraining.com/#programs",
+        "description": "$650 per person. Three sessions. Founding rate for teams that start by Dec 31, 2026. Teams of 15 to 20 people get 10% off."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-full",
+      "name": "Full Program",
+      "serviceType": "Difficult conversation practice",
+      "description": "Five sessions, with a before-and-after results report.",
+      "url": "https://harknesstraining.com/#programs",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Full Program",
+        "price": "2500",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31",
+        "url": "https://harknesstraining.com/#programs",
+        "description": "$2,500 per person. Five sessions, with a before-and-after results report. Founding rate for teams that start by Dec 31, 2026. Teams of 15 to 20 people get 10% off."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-practice-lab",
+      "name": "Practice Lab",
+      "serviceType": "Difficult conversation practice",
+      "description": "Two sessions a month, to keep the skill sharp. The team rate does not apply.",
+      "url": "https://harknesstraining.com/#programs",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Practice Lab",
+        "price": "395",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31",
+        "url": "https://harknesstraining.com/#programs",
+        "description": "$395 per person per month. Two sessions a month.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "395",
+          "priceCurrency": "USD",
+          "unitText": "per person per month",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": "1",
+            "unitCode": "MON"
+          }
+        }
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://harknesstraining.com/#service-custom",
+      "name": "Custom program",
+      "serviceType": "Difficult conversation practice",
+      "description": "Scenarios written from the conversations a team's leaders keep facing. Actors are briefed to push back the way those people do. The team sets the schedule. Quoted per team; no public list price.",
+      "url": "https://harknesstraining.com/custom",
+      "provider": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Custom program",
+        "availability": "https://schema.org/InStock",
+        "url": "https://harknesstraining.com/custom",
+        "description": "Quoted for the team. No public list price."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://harknesstraining.com/#faq",
+      "url": "https://harknesstraining.com/#faq",
+      "isPartOf": {
+        "@id": "https://harknesstraining.com/#organization"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this for me, or for my team?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both. A mishandled conversation costs the person who has it and the team around them. Individual leaders start at a free Open Lab and can join the monthly Practice Lab. Teams start with a free 20-minute demo or a Kickoff, then a Pilot or the Full Program."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a conversation ready?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It helps. Bring the one you keep putting off: that's usually the one most likely to go wrong. Keep it general, with no names, programs or customers. If you'd rather watch, tick “I'd rather watch this time” when you save a seat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why would an engineer need this?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At a certain level, the job is mostly conversations. A mishandled one can sink a good design, hide a risk until it's late, or cost you a good engineer. You were promoted for your technical judgment. Nobody trained you for the conversation where you have to defend it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens at an Open Lab?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We start with why conversations get mishandled, then spend 5 to 10 minutes on a simple storytelling framework. Then the hot seat: one person runs a conversation they're dreading with an improv actor, the room gives feedback (“When you said ___, I felt ___”), and they run it again with the feedback."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who are the actors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Improv actors, briefed to push back the way the other person would: interrupting, doubting, going quiet. Pressure is where conversations get mishandled, so that's where we practice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why practice with peers watching?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most mishandled conversations go uncorrected because nobody tells you how your words landed. Here, everyone does. Each observer writes a 4×6 card: “When you said ___, I felt ___.” Then you go again."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it recorded? What about sensitive work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sessions are recorded so you can see exactly where a conversation turned. Keep scenarios general and unclassified: no program names, customers or export-controlled details."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Online or in person? What time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both, because hard conversations happen on video and across the table. Every Open Lab has an online session at noon Pacific. Once a month there's also an in-person session in El Segundo at 6 PM Pacific. Team sessions run online, at your site, or in El Segundo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can new managers practice difficult conversations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bring the conversation you keep putting off to a free Open Lab, or practice it with your team in a Kickoff, Pilot, or the Full Program. A session is the same shape either way. You spend 5 to 10 minutes on a simple storytelling framework, then one person runs the conversation with an improv actor who pushes back. Peers say how it landed (“When you said ___, I felt ___”), and you run it again. If you'd rather watch, you can."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a mishandled conversation cost a team?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Trust, talent, and time. It costs the person who has it and the team around them. A mishandled conversation can stall a decision, hide a risk until it's late, or cost the team a good engineer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is an Open Lab?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open Lab is free and runs 90 minutes. It starts with why conversations get mishandled, then 5 to 10 minutes on a storytelling framework: character, goal, challenge, resolution. One person practices a conversation they are dreading with an improv actor, the room gives feedback, and they run it again. Upcoming online sessions are 12:00–1:30 PM Pacific on Thursday, November 19, 2026; Thursday, December 10, 2026; and Thursday, January 7, 2027. December 10 also has an in-person session in El Segundo at 6:00–7:30 PM Pacific."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Harkness Training Solutions cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open Lab is free. A demo for teams is free and runs 20 minutes. Founding rates lock in for teams that start by Dec 31, 2026. Per person: Kickoff $150 (one 75-minute session, credited in full toward the Pilot), Pilot $650 (three sessions), Full Program $2,500 (five sessions, with a before-and-after results report), Practice Lab $395 a month (two sessions a month). Teams of 15 to 20 people get 10% off the Kickoff, Pilot, and Full Program. Over 20 people, ask for a cohort quote. Custom programs are quoted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is Harkness Training for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Leaders who have hard conversations to handle, especially new managers. Many of them work at hard-tech companies in the South Bay: space, defense, and aerospace. An individual can start at a free Open Lab. A team can start with a free 20-minute demo or a Kickoff."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I join online, or only in El Segundo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both. Every Open Lab has an online session at noon Pacific. Once a month there is also an in-person session in El Segundo at 6 PM Pacific. The December 10, 2026 Open Lab is the first in-person date on the schedule. Team sessions run online, at your site, or in El Segundo. The address is 222 N. Pacific Coast Hwy, El Segundo, CA. The room details go out after you register."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Kickoff, a Pilot, and the Full Program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Kickoff is one 75-minute session at $150 per person, and that fee is credited in full toward the Pilot. The Pilot is three sessions at $650 per person. The Full Program is five sessions at $2,500 per person and includes a before-and-after results report. Practice Lab is separate: two sessions a month at $395 per person, to keep the skill sharp."
+          }
+        }
+      ]
     }
   ]
 }
@@ -418,6 +736,13 @@
         <details><summary>Why practice with peers watching?</summary><p>Most mishandled conversations go uncorrected because nobody tells you how your words landed. Here, everyone does. Each observer writes a 4×6 card: “When you said ___, I felt ___.” Then you go again.</p></details>
         <details><summary>Is it recorded? What about sensitive work?</summary><p>Sessions are recorded so you can see exactly where a conversation turned. Keep scenarios general and unclassified: no program names, customers or export-controlled details.</p></details>
         <details><summary>Online or in person? What time?</summary><p>Both, because hard conversations happen on video and across the table. Every Open Lab has an online session at noon Pacific. Once a month there's also an in-person session in El Segundo at 6 PM Pacific. Team sessions run online, at your site, or in El Segundo.</p></details>
+        <details><summary>How can new managers practice difficult conversations?</summary><p>Bring the conversation you keep putting off to a free Open Lab, or practice it with your team in a Kickoff, Pilot, or the Full Program. A session is the same shape either way. You spend 5 to 10 minutes on a simple storytelling framework, then one person runs the conversation with an improv actor who pushes back. Peers say how it landed (“When you said ___, I felt ___”), and you run it again. If you'd rather watch, you can.</p></details>
+        <details><summary>What does a mishandled conversation cost a team?</summary><p>Trust, talent, and time. It costs the person who has it and the team around them. A mishandled conversation can stall a decision, hide a risk until it's late, or cost the team a good engineer.</p></details>
+        <details><summary>What is an Open Lab?</summary><p>Open Lab is free and runs 90 minutes. It starts with why conversations get mishandled, then 5 to 10 minutes on a storytelling framework: character, goal, challenge, resolution. One person practices a conversation they are dreading with an improv actor, the room gives feedback, and they run it again. Upcoming online sessions are 12:00–1:30 PM Pacific on Thursday, November 19, 2026; Thursday, December 10, 2026; and Thursday, January 7, 2027. December 10 also has an in-person session in El Segundo at 6:00–7:30 PM Pacific.</p></details>
+        <details><summary>How much does Harkness Training Solutions cost?</summary><p>Open Lab is free. A demo for teams is free and runs 20 minutes. Founding rates lock in for teams that start by Dec 31, 2026. Per person: Kickoff $150 (one 75-minute session, credited in full toward the Pilot), Pilot $650 (three sessions), Full Program $2,500 (five sessions, with a before-and-after results report), Practice Lab $395 a month (two sessions a month). Teams of 15 to 20 people get 10% off the Kickoff, Pilot, and Full Program. Over 20 people, ask for a cohort quote. Custom programs are quoted.</p></details>
+        <details><summary>Who is Harkness Training for?</summary><p>Leaders who have hard conversations to handle, especially new managers. Many of them work at hard-tech companies in the South Bay: space, defense, and aerospace. An individual can start at a free Open Lab. A team can start with a free 20-minute demo or a Kickoff.</p></details>
+        <details><summary>Can I join online, or only in El Segundo?</summary><p>Both. Every Open Lab has an online session at noon Pacific. Once a month there is also an in-person session in El Segundo at 6 PM Pacific. The December 10, 2026 Open Lab is the first in-person date on the schedule. Team sessions run online, at your site, or in El Segundo. The address is 222 N. Pacific Coast Hwy, El Segundo, CA. The room details go out after you register.</p></details>
+        <details><summary>What is a Kickoff, a Pilot, and the Full Program?</summary><p>A Kickoff is one 75-minute session at $150 per person, and that fee is credited in full toward the Pilot. The Pilot is three sessions at $650 per person. The Full Program is five sessions at $2,500 per person and includes a before-and-after results report. Practice Lab is separate: two sessions a month at $395 per person, to keep the skill sharp.</p></details>
       </div>
     </div>
   </section>

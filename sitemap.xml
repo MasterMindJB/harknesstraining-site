@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://harknesstraining.com/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-03</lastmod>
   </url>
   <url>
     <loc>https://harknesstraining.com/demo</loc>
@@ -39,5 +39,13 @@
   <url>
     <loc>https://harknesstraining.com/pricing</loc>
     <lastmod>2026-11-02</lastmod>
+  </url>
+  <url>
+    <loc>https://harknesstraining.com/llms.txt</loc>
+    <lastmod>2026-11-03</lastmod>
+  </url>
+  <url>
+    <loc>https://harknesstraining.com/llms-full.txt</loc>
+    <lastmod>2026-11-03</lastmod>
   </url>
 </urlset>
