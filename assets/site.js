@@ -28,7 +28,7 @@ var HTS = {
   teamRate: { min: 15, max: 20, off: 0.10 },
 
   // Social profiles. Empty = icon stays hidden.
-  social: { linkedin: "", youtube: "https://www.youtube.com/@harknesstraining", x: "https://x.com/harknesstrainin" },
+  social: { linkedin: "https://www.linkedin.com/company/144037123", youtube: "https://www.youtube.com/@harknesstraining", x: "https://x.com/harknesstrainin" },
 
   email: "hello@harknesstraining.com",
   phone: "(310) 896-5379",
