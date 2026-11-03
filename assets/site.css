@@ -1256,16 +1256,16 @@ main>section.logo-band:not(.hero)::before{content:none}
 .logo-marquee:hover .logo-track,.logo-marquee:focus-within .logo-track{animation-play-state:paused}
 .logo-set{display:flex;align-items:center;gap:54px;margin:0;padding:6px 27px 6px 0;list-style:none}
 .logo-set li{display:flex;align-items:center;flex:none}
-.logo-set img{display:block;height:28px;width:auto;filter:brightness(0) opacity(.58)}
-.logo-set img.logo-tall{height:36px}
+.logo-set img{display:block;height:32px;width:auto;max-width:220px;object-fit:contain;filter:brightness(0) opacity(.55)}
 .logo-word{font-family:var(--body);font-weight:600;font-size:.95rem;letter-spacing:.01em;line-height:1;color:#6A7386;white-space:nowrap}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-set img{filter:brightness(0) invert(1) opacity(.42)}}
+:root[data-theme="dark"] .logo-set img{filter:brightness(0) invert(1) opacity(.42)}
 @keyframes logo-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (max-width:600px){
   .logo-band{padding-top:14px}
   .logo-band h2{margin-bottom:10px;font-size:1.05rem}
   .logo-set{gap:36px;padding-right:18px}
-  .logo-set img{height:22px}
-  .logo-set img.logo-tall{height:28px}
+  .logo-set img{height:24px;max-width:170px}
   .logo-word{font-size:.84rem}
 }
 @media (prefers-reduced-motion:reduce){
