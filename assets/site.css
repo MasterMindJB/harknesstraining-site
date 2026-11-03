@@ -722,7 +722,7 @@ footer.site-foot::before{opacity:.08}
 
 /* 1 · self-typing prompt */
 .typer{margin-top:6px;display:flex;align-items:center;min-height:2.4em;padding:.5em .7em;border-radius:5px;border:1px solid var(--line);background:var(--surface);font-size:.86rem;color:var(--ink);font-family:var(--body);font-style:normal}
-.typer-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.typer-t{white-space:normal;overflow:visible;text-overflow:clip;min-width:0}
 .caret{width:2px;height:1.1em;background:var(--sky);margin-left:2px;flex:none;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
