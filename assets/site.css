@@ -1277,3 +1277,25 @@ main>section.logo-band:not(.hero)::before{content:none}
 .session-vid .sv-frame{position:relative;margin:24px 0 0;border-radius:12px;overflow:hidden;background:var(--navy);aspect-ratio:16/9;box-shadow:0 24px 50px -28px rgba(28,44,91,.55),0 0 0 1px rgba(28,44,91,.08)}
 .session-vid .sv-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--navy)}
 @media (max-width:600px){.session-vid .sv-frame{aspect-ratio:4/5}}
+
+/* rev 55: the three beats follow the session video, and the card section
+   sits close under that frame. The old gap was the video section's bottom
+   padding stacked on the next section's top padding (about 208px on a
+   1440px window), which left a blank band of blueprint between them. */
+.session-vid{padding-bottom:0}
+.session-vid .pos-2{margin:28px 0 0;max-width:40rem;font-size:1.25rem;line-height:1.55;color:var(--muted)}
+.session-vid .pos-2 span{display:block}
+.session-vid .pos-2 strong{font-weight:600;color:var(--ink)}
+.session-vid + .gap-sec{padding-top:clamp(28px,3vw,40px)}
+@media (max-width:899px){
+  .session-vid .pos-2{margin-top:22px;font-size:1.02rem;line-height:1.5}
+  .session-vid .pos-2 span{text-wrap:balance}
+  .session-vid .pos-2 span + span{margin-top:4px}
+}
+/* How it works now sits between pricing and the FAQ. Both pricing and this
+   section are white bands, so drop the doubled top rule. Keep a short pad
+   on each side of the join, and again before the FAQ, instead of stacking
+   a full section pad on both sides (that left ~200px of blueprint). */
+#programs:has(+ #how){padding-bottom:clamp(28px,3.2vw,40px)}
+#programs + #how{border-top:0;padding-top:clamp(32px,3.6vw,48px);padding-bottom:clamp(28px,3.2vw,40px)}
+#how + .faq-sec{padding-top:clamp(36px,4vw,56px)}
