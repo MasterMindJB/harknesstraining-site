@@ -135,6 +135,10 @@ HTS.sendForm = function (form, extra) {
        no-cors cannot read the response, so this is the same moment the page
        says "You're in". A Luma link or the mailto fallback has no confirmation. */
     if ((data._subject || "") === "Open Lab registration") htsEvent("seat_saved", { session: data.session || "" });
+    /* Demo request: validation already passed in checkForm, and this is the
+       same accepted send as seat_saved. A "Book a demo" click stays cta_click.
+       The mailto fallback returns before done(), so it is not a confirmation. */
+    if (htsIsDemoRequest(form, data)) htsDemoRequest(data._page);
     form.reset();
   }
   function fail() {
@@ -791,6 +795,40 @@ function htsEvent(name, params) {
     window.gtag("event", name, params || {});
   } catch (e) {}
 }
+function htsPagePath() {
+  return location.pathname.replace(/^\//, "") || "home";
+}
+/* A site form is a demo request when its subject says so, or it is marked
+   data-demo-request. Other forms (Open Lab, estimate, contact, custom) are not. */
+function htsIsDemoRequest(form, data) {
+  if (form && form.hasAttribute && form.hasAttribute("data-demo-request")) return true;
+  return /\bdemo\b/i.test((data && data._subject) || "");
+}
+function htsDemoRequest(pagePath) {
+  htsEvent("demo_request", { page_path: pagePath || htsPagePath() });
+}
+/* The Book form on demo.html is Google's appointment schedule inside the
+   embed. Validation and the Book button stay in that frame, so a click on
+   our "Book a demo" link is not a submission. Count it only if the frame
+   tells the page the booking was confirmed. */
+function htsCalendarBookingConfirmed(data) {
+  var s = "";
+  if (typeof data === "string") s = data;
+  else if (data && typeof data === "object") s = data.event || data.type || data.status || "";
+  if (typeof s !== "string") return false;
+  s = s.toLowerCase();
+  return s === "booking_confirmed" || s === "appointment_booked" || s === "event_scheduled" || s.indexOf("booking confirmed") !== -1;
+}
+(function () {
+  if (!/(^|\/)demo(\.html)?$/.test(location.pathname)) return;
+  window.addEventListener("message", function (e) {
+    try {
+      if (e.origin !== "https://calendar.google.com") return;
+      if (!htsCalendarBookingConfirmed(e.data)) return;
+      htsDemoRequest(htsPagePath());
+    } catch (err) {}
+  });
+})();
 (function () {
   var named = /^(save a seat|book a demo|book a 20-minute demo|try it free at open lab|pick a time|pick a time for a demo)$/i;
   function labelOf(el) {
