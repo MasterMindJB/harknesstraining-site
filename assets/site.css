@@ -1289,3 +1289,12 @@ main>section.logo-band:not(.hero)::before{content:none}
 #programs:has(+ #how){padding-bottom:clamp(28px,3.2vw,40px)}
 #programs + #how{border-top:0;padding-top:clamp(32px,3.6vw,48px);padding-bottom:clamp(28px,3.2vw,40px)}
 #how + .faq-sec{padding-top:clamp(36px,4vw,56px)}
+
+/* rev 57: no session block under the logos, so the next section keeps a short pad.
+   How it works is the existing step list, numbered 1–4, read top to bottom. */
+.logo-band + .gap-sec{padding-top:clamp(36px,4vw,56px)}
+#how .steps{max-width:40rem;margin-top:28px}
+#how .step{grid-template-columns:2rem 1fr;gap:2px 14px;align-items:baseline;padding-block:18px}
+#how .step::before{content:counter(s);font-size:1.2rem;letter-spacing:0;line-height:1.2}
+#how .step b{font-weight:700;font-size:1.05rem;color:var(--ink)}
+#how .step p{margin-top:2px}
