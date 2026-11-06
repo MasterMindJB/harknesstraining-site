@@ -36,9 +36,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=58">
+<link rel="stylesheet" href="assets/site.css?v=59">
 <link rel="prefetch" href="index.html"><link rel="prefetch" href="demo.html"><link rel="prefetch" href="custom.html">
-<script src="assets/site.js?v=53"></script>
+<script src="assets/site.js?v=54"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -388,14 +388,6 @@
         },
         {
           "@type": "Question",
-          "name": "Why practice with peers watching?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Most mishandled conversations go uncorrected because nobody tells you how your words landed. Here, everyone does. Each observer writes a 4×6 card: “When you said ___, I felt ___.” Then you go again."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "Is it recorded? What about sensitive work?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -412,42 +404,10 @@
         },
         {
           "@type": "Question",
-          "name": "How can new managers practice difficult conversations?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Bring the conversation you keep putting off to a free Open Lab, or practice it with your team in a Kickoff, Pilot, or the Full Program. A session is the same shape either way. You spend 5 to 10 minutes on a simple storytelling framework, then one person runs the conversation with an improv actor who pushes back. Peers say how it landed (“When you said ___, I felt ___”), and you run it again. If you'd rather watch, you can."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What does a mishandled conversation cost a team?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Trust, talent, and time. It costs the person who has it and the team around them. A mishandled conversation can stall a decision, hide a risk until it's late, or cost the team a good engineer."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is an Open Lab?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Open Lab is free and runs 90 minutes. It starts with why conversations get mishandled, then 5 to 10 minutes on a storytelling framework: character, goal, challenge, resolution. One person practices a conversation they are dreading with an improv actor, the room gives feedback, and they run it again. Upcoming online sessions are 12:00–1:30 PM Pacific on Thursday, November 19, 2026; Thursday, December 10, 2026; and Thursday, January 7, 2027. December 10 also has an in-person session in El Segundo at 6:00–7:30 PM Pacific."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "How much does Harkness Training Solutions cost?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Open Lab is free. A demo for teams is free and runs 20 minutes. Founding rates lock in for teams that start by Dec 31, 2026. Per person: Kickoff $150 (one 75-minute session, credited in full toward the Pilot), Pilot $650 (three sessions), Full Program $2,500 (five sessions, with a before-and-after results report), Practice Lab $395 a month (two sessions a month). Teams of 15 to 20 people get 10% off the Kickoff, Pilot, and Full Program. Over 20 people, ask for a cohort quote. Custom programs are quoted."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Who is Harkness Training for?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Leaders who have hard conversations to handle, especially new managers. Many of them work at hard-tech companies in the South Bay: space, defense, and aerospace. An individual can start at a free Open Lab. A team can start with a free 20-minute demo or a Kickoff."
           }
         }
       ]
@@ -465,13 +425,14 @@
     </a>
     <nav class="tabs" aria-label="Main">
       <a class="tab" href="#how">How it works</a>
-      <a class="tab" href="open-lab.html">Open Lab</a>
+      <a class="tab" href="#open-lab">Open Lab</a>
       <a class="tab" href="#programs">Pricing</a>
-      <a class="tab" href="custom.html">Custom</a>
       <a class="tab" href="#faq">FAQ</a>
-      <a class="tab" href="demo.html">Book a demo</a>
     </nav>
-    <a class="btn btn-hot seat" href="#open-lab">Save a seat</a>
+    <div class="bar-ctas">
+      <a class="btn btn-ghost" href="demo.html">Book a 20-minute demo</a>
+      <a class="btn btn-hot seat" href="#open-lab">Save a free Open Lab seat</a>
+    </div>
   </div>
 </header>
 <main id="main">
@@ -482,9 +443,10 @@
         <h1 class="h-two h-rotl"><span><em>Mishandled</em> conversations</span> <span><span class="rot" data-words="poison culture|erode trust|waste capital|stall careers|breed resentment|ruin reputations|leave scars|follow you" aria-hidden="true"><span>poison culture.</span></span><span class="sr-only">poison culture, erode trust, waste capital, stall careers, breed resentment, ruin reputations, leave scars and follow you.</span></span></h1>
         <p class="pos">We train leaders &amp; teams to handle tricky conversations under pressure.</p>
         <div class="cta-row doors">
-          <a class="btn btn-hot" href="open-lab.html">Try it free at Open Lab</a>
+          <a class="btn btn-hot" href="#open-lab">Save a free Open Lab seat</a>
           <a class="btn btn-ghost" href="demo.html">Book a 20-minute demo</a>
         </div>
+        <p class="hero-proof">Next Open Lab: <a href="#open-lab" data-next-date>soon</a> · free · 90 minutes</p>
       </div>
     </div>
   </div>
@@ -533,12 +495,13 @@
   <section class="gap-sec">
     <div class="wrap">
       <h2 class="h-level">At a certain level,<br>the job is mostly conversations.</h2>
-      <div class="deck" aria-label="Conversations across eight business functions">
-        <a class="dcard" href="#open-lab" style="--r:-2deg"><span class="dc-in">
+      <p class="lede gap-lede">As the responsibility grows, more of the work depends on conversations. These are a few that go wrong when they are mishandled.</p>
+      <div class="deck" aria-label="Six workplace conversations">
+        <a class="dcard" href="#open-lab" style="--r:-1.5deg"><span class="dc-in">
           <span class="dc-face dc-front"><span class="dc-who">A senior engineer, in front of your team</span><span class="dc-line">“Your design sucks. We should do it my way.”</span></span>
           <span class="dc-face dc-back"><span class="dc-prob">Decisions stall in turf wars.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
         </span></a>
-        <a class="dcard" href="#open-lab" style="--r:1.5deg"><span class="dc-in">
+        <a class="dcard" href="#open-lab" style="--r:1.2deg"><span class="dc-in">
           <span class="dc-face dc-front"><span class="dc-who">Your program lead</span><span class="dc-line">“Why am I only hearing about this now?”</span></span>
           <span class="dc-face dc-back"><span class="dc-prob">Bad news arrives too late.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
         </span></a>
@@ -546,37 +509,44 @@
           <span class="dc-face dc-front"><span class="dc-who">Your production lead, Friday at 4</span><span class="dc-line">“Is it a go or not? The truck leaves at six.”</span></span>
           <span class="dc-face dc-back"><span class="dc-prob">Rushed yeses become rework.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
         </span></a>
-        <a class="dcard" href="#open-lab" style="--r:2deg"><span class="dc-in">
-          <span class="dc-face dc-front"><span class="dc-who">Your key supplier</span><span class="dc-line">“Best we can do is twelve more weeks.”</span></span>
-          <span class="dc-face dc-back"><span class="dc-prob">Vague escalations, late parts.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
-        </span></a>
         <a class="dcard" href="#open-lab" style="--r:1deg"><span class="dc-in">
           <span class="dc-face dc-front"><span class="dc-who">A customer's program office</span><span class="dc-line">“The other team says they can do it for less.”</span></span>
           <span class="dc-face dc-back"><span class="dc-prob">Deals stall under pushback.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
         </span></a>
-        <a class="dcard" href="#open-lab" style="--r:-1.5deg"><span class="dc-in">
+        <a class="dcard" href="#open-lab" style="--r:-1.2deg"><span class="dc-in">
           <span class="dc-face dc-front"><span class="dc-who">Your CFO</span><span class="dc-line">“Walk me through why this is over budget.”</span></span>
           <span class="dc-face dc-back"><span class="dc-prob">Overruns surface too late.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
         </span></a>
-        <a class="dcard" href="#open-lab" style="--r:2deg"><span class="dc-in">
+        <a class="dcard" href="#open-lab" style="--r:1.4deg"><span class="dc-in">
           <span class="dc-face dc-front"><span class="dc-who">A former peer who now reports to you</span><span class="dc-line">“Wait, I thought my work was fine.”</span></span>
           <span class="dc-face dc-back"><span class="dc-prob">Unsaid feedback becomes resignations.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
-        </span></a>
-        <a class="dcard" href="#open-lab" style="--r:-1deg"><span class="dc-in">
-          <span class="dc-face dc-front"><span class="dc-who">Your board</span><span class="dc-line">“What changed since last quarter?”</span></span>
-          <span class="dc-face dc-back"><span class="dc-prob">Softened updates, worse decisions.</span><span class="dc-go">Practice it <i aria-hidden="true">→</i></span></span>
         </span></a>
       </div>
     </div>
   </section>
 
+  <section class="fw" id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="lede how-meta">Every session follows the same four steps. 90 minutes · an improv actor · peer feedback.</p>
+      <ol class="steps">
+        <li class="step"><div><b>Bring a real conversation</b><p>The one you keep putting off. Keep it general: no names, programs, or customers.</p></div></li>
+        <li class="step"><div><b>An improv actor pushes back</b><p>They play the other person and push back the way that person would: interrupting, doubting, going quiet.</p></div></li>
+        <li class="step"><div><b>Hear how it landed</b><p>Peers tell you, in the room: “When you said ___, I felt ___.”</p></div></li>
+        <li class="step"><div><b>Run it again</b><p>Same conversation, with that feedback, before you have it for real.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="takes-sec">
     <div class="wrap">
-      <h2 class="center">The difference one practice round makes</h2>
+      <h2 class="center">Same conversation. Clearer for the listener.</h2>
+      <p class="take-frame">Take 1 is what a listener hears before practice. Take 2 is the same conversation after one round of feedback: a goal, the challenge, and a way through.</p>
+      <p class="beat-key"><span class="bg">Goal</span><span class="bc">Challenge</span><span class="br">Resolution</span></p>
       <figure class="voice wide real" data-sample>
         <div class="tk-grid">
           <article class="tk" data-player>
-            <header><span class="vq-k">Take 1</span></header>
+            <header><span class="vq-k">Take 1</span><span class="tk-sub">Before practice</span></header>
             <div class="pl">
               <button type="button" class="play" aria-label="Play Take 1"><i aria-hidden="true"></i></button>
               <div class="wf" data-peaks="12,15,81,70,81,86,87,63,40,77,85,45,65,67,51,63,16,72,78,82,91,85,42,93,96,20,49,72,46,19,16,74,60,100,86,91,87,42,15,50,65,82,83,58,66,60,80,51,48,21,44,35,19,16,15,14" role="slider" tabindex="0" aria-label="Take 1 position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
@@ -586,7 +556,7 @@
             <p class="tx">“Thanks for taking some time to meet with me. I've got some feedback I'd like to go over with you. Looking at past performances, it's just not up to standard. So I'm just curious to hear what you have to say.”</p>
           </article>
           <article class="tk tk2" data-player>
-            <header><span class="vq-k">Take 2</span></header>
+            <header><span class="vq-k">Take 2</span><span class="tk-sub">After one round</span></header>
             <div class="pl">
               <button type="button" class="play" aria-label="Play Take 2"><i aria-hidden="true"></i></button>
               <div class="wf" data-peaks="49,71,52,64,95,63,74,61,63,51,55,66,58,58,69,60,62,75,58,75,63,43,66,70,100,88,36,43,84,78,67,66,63,65,68,70,53,51,64,60,42,76,88,91,65,60,68,38,85,51,67,66,75,61,19,18" role="slider" tabindex="0" aria-label="Take 2 position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
@@ -610,17 +580,18 @@
   <section class="light" id="open-lab">
     <span id="open-night" class="anchor-alias" aria-hidden="true"></span>
     <div class="wrap">
-      <p class="eyebrow">Your first step</p>
-      <h2 style="margin-top:10px">Open Lab.</h2>
-      <p class="lede open-lede">Bring one conversation you're dreading. We'll break it down together.</p>
-      <ol class="dates" data-schedule data-count="3"></ol>
+      <h2>Open Lab</h2>
+      <p class="open-support">Bring a real conversation. Leave with a better way to handle it.</p>
+      <p class="lede open-lede">Try Harkness in a free 90-minute Open Lab. Bring a workplace conversation, see the practice method in action, and build a clearer approach before you have the real discussion.</p>
+      <ol class="dates invite" data-schedule data-count="3"></ol>
+      <p class="alt-cta">Bringing a team? <a href="demo.html">Book a 20-minute demo</a>.</p>
     </div>
   </section>
 
   <section class="fw" id="programs">
     <div class="wrap">
-      <h2 class="grow-h"><span class="small-l">Start small.</span><span class="red">Grow when it works.</span></h2>
-      <div class="tally" data-tally>
+      <h2 class="grow-h"><span class="small-l">Start small.</span><span class="grow-strong">Grow when it works.</span></h2>
+      <div class="tally" data-tally data-tally-static>
         <div class="tally-head">
           <label for="tally-n">How many people?</label>
           <div class="stepper">
@@ -630,14 +601,13 @@
           </div>
           <span class="founding"><b>Founding rates</b> lock in for teams that start by Dec 31, 2026</span>
           <p class="team-note" data-team-note aria-live="polite" hidden></p>
-          <button type="button" class="tally-cue" aria-expanded="false" aria-controls="tally-body"><span class="cue-show">See prices for your team</span><span class="cue-hide">Hide prices</span><i aria-hidden="true"></i></button>
         </div>
         <div class="tally-body" id="tally-body"><div class="tally-in">
         <ol class="vpath">
           <li><b>Open Lab</b><small><span class="outcome">See the method and leave with a clearer approach to one real conversation.</span><i class="ses free">90 min</i>Try it yourself</small><span class="each">Free</span><span class="tot">Free</span></li>
-          <li><b>Kickoff <em class="badge">Best first step</em></b><small><span class="outcome">Practice one high-stakes conversation with your team and get credited toward the Pilot.</span><i class="ses">1 session</i>75 minutes <span class="credit">Kickoff fee 100% credited toward the Pilot.</span></small><span class="each">$150 / person</span><span class="tot" data-pp="150" data-disc>$900</span></li>
+          <li class="key"><b>Kickoff <em class="badge">Best first step</em></b><small><span class="outcome">Practice one high-stakes conversation with your team and get credited toward the Pilot.</span><i class="ses">1 session</i>75 minutes <span class="credit">Kickoff fee 100% credited toward the Pilot.</span></small><span class="each">$150 / person</span><span class="tot" data-pp="150" data-disc>$900</span></li>
           <li><b>Pilot</b><small><span class="outcome">Build the habit: three practice rounds with feedback while the stakes are still low.</span><i class="ses">3 sessions</i>Weeks 1–3</small><span class="each">$650 / person</span><span class="tot" data-pp="650" data-disc>$3,900</span></li>
-          <li class="key"><b>Full Program <em class="badge gold">Best value</em></b><small><span class="outcome">Complete the program and leave with a before-and-after results report.</span><i class="ses">5 sessions</i>The complete program, with a before-and-after results report</small><span class="each">$2,500 / person</span><span class="tot" data-pp="2500" data-disc>$15,000</span></li>
+          <li><b>Full Program <em class="badge gold">Best value</em></b><small><span class="outcome">Complete the program and leave with a before-and-after results report.</span><i class="ses">5 sessions</i>The complete program, with a before-and-after results report</small><span class="each">$2,500 / person</span><span class="tot" data-pp="2500" data-disc>$15,000</span></li>
           <li><b>Practice Lab</b><small><span class="outcome">Keep the skill sharp after the program.</span><i class="ses">2 sessions/month</i>Keeps the skill sharp</small><span class="each">$395 / person / mo</span><span class="tot" data-pp="395" data-suffix="/mo">$2,370/mo</span></li>
         </ol>
         </div></div>
@@ -663,38 +633,20 @@
     </div>
   </section>
 
-  <section class="fw" id="how">
-    <div class="wrap">
-      <p class="eyebrow">How it works</p>
-      <h2 style="margin-top:10px">Every session follows the same four steps.</h2>
-      <ol class="steps">
-        <li class="step"><div><b>Bring a real conversation</b><p>The one you keep putting off. Keep it general: no names, programs, or customers.</p></div></li>
-        <li class="step"><div><b>A live actor pushes back</b><p>An improv actor plays the other person and pushes back the way they would: interrupting, doubting, going quiet.</p></div></li>
-        <li class="step"><div><b>Hear the feedback</b><p>Peers tell you how it landed: “When you said ___, I felt ___.”</p></div></li>
-        <li class="step"><div><b>Try again</b><p>Run the same conversation once more, with that feedback.</p></div></li>
-      </ol>
-    </div>
-  </section>
-
   <section class="faq-sec" id="faq">
     <div class="wrap">
-      <p class="eyebrow">Questions</p>
-      <h2 style="margin-top:10px">Before you sign up</h2>
+      <h2>Before you sign up</h2>
       <div class="faq">
         <details><summary>Is this for me, or for my team?</summary><p>Both. A mishandled conversation costs the person who has it and the team around them. Individual leaders start at a free Open Lab and can join the monthly Practice Lab. Teams start with a free 20-minute demo or a Kickoff, then a Pilot or the Full Program.</p></details>
         <details><summary>Do I need a conversation ready?</summary><p>It helps. Bring the one you keep putting off: that's usually the one most likely to go wrong. Keep it general, with no names, programs or customers. If you'd rather watch, tick “I'd rather watch this time” when you save a seat.</p></details>
         <details><summary>Why would an engineer need this?</summary><p>At a certain level, the job is mostly conversations. A mishandled one can sink a good design, hide a risk until it's late, or cost you a good engineer. You were promoted for your technical judgment. Nobody trained you for the conversation where you have to defend it.</p></details>
         <details><summary>What happens at an Open Lab?</summary><p>We start with why conversations get mishandled, then spend 5 to 10 minutes on a simple storytelling framework. Then the hot seat: one person runs a conversation they're dreading with an improv actor, the room gives feedback (“When you said ___, I felt ___”), and they run it again with the feedback.</p></details>
         <details><summary>Who are the actors?</summary><p>Improv actors, briefed to push back the way the other person would: interrupting, doubting, going quiet. Pressure is where conversations get mishandled, so that's where we practice.</p></details>
-        <details><summary>Why practice with peers watching?</summary><p>Most mishandled conversations go uncorrected because nobody tells you how your words landed. Here, everyone does. Each observer writes a 4×6 card: “When you said ___, I felt ___.” Then you go again.</p></details>
         <details><summary>Is it recorded? What about sensitive work?</summary><p>Sessions are recorded so you can see exactly where a conversation turned. Keep scenarios general and unclassified: no program names, customers or export-controlled details.</p></details>
         <details><summary>Online or in person? What time?</summary><p>Both, because hard conversations happen on video and across the table. Every Open Lab has an online session at noon Pacific. Once a month there's also an in-person session in El Segundo at 6 PM Pacific. Team sessions run online, at your site, or in El Segundo.</p></details>
-        <details><summary>How can new managers practice difficult conversations?</summary><p>Bring the conversation you keep putting off to a free Open Lab, or practice it with your team in a Kickoff, Pilot, or the Full Program. A session is the same shape either way. You spend 5 to 10 minutes on a simple storytelling framework, then one person runs the conversation with an improv actor who pushes back. Peers say how it landed (“When you said ___, I felt ___”), and you run it again. If you'd rather watch, you can.</p></details>
-        <details><summary>What does a mishandled conversation cost a team?</summary><p>Trust, talent, and time. It costs the person who has it and the team around them. A mishandled conversation can stall a decision, hide a risk until it's late, or cost the team a good engineer.</p></details>
-        <details><summary>What is an Open Lab?</summary><p>Open Lab is free and runs 90 minutes. It starts with why conversations get mishandled, then 5 to 10 minutes on a storytelling framework: character, goal, challenge, resolution. One person practices a conversation they are dreading with an improv actor, the room gives feedback, and they run it again. Upcoming online sessions are 12:00–1:30 PM Pacific on Thursday, November 19, 2026; Thursday, December 10, 2026; and Thursday, January 7, 2027. December 10 also has an in-person session in El Segundo at 6:00–7:30 PM Pacific.</p></details>
         <details><summary>How much does Harkness Training Solutions cost?</summary><p>Open Lab is free. A demo for teams is free and runs 20 minutes. Founding rates lock in for teams that start by Dec 31, 2026. Per person: Kickoff $150 (one 75-minute session, credited in full toward the Pilot), Pilot $650 (three sessions), Full Program $2,500 (five sessions, with a before-and-after results report), Practice Lab $395 a month (two sessions a month). Teams of 15 to 20 people get 10% off the Kickoff, Pilot, and Full Program. Over 20 people, ask for a cohort quote. Custom programs are quoted.</p></details>
-        <details><summary>Who is Harkness Training for?</summary><p>Leaders who have hard conversations to handle, especially new managers. Many of them work at hard-tech companies in the South Bay: space, defense, and aerospace. An individual can start at a free Open Lab. A team can start with a free 20-minute demo or a Kickoff.</p></details>
       </div>
+      <p class="faq-more"><a href="faq.html">More questions</a></p>
     </div>
   </section>
 
@@ -703,6 +655,11 @@
       <div class="grid2" style="margin-top:0">
         <div>
           <h2>Bring one real conversation.</h2>
+          <p class="close-line">Tell us about a conversation you need to get right. We'll help you find the best place to start.</p>
+          <div class="cta-row close-ctas">
+            <a class="btn btn-hot" href="#open-lab">Save a free Open Lab seat</a>
+            <a class="btn btn-line" href="demo.html">Book a 20-minute demo</a>
+          </div>
           <div class="email"><a class="mail" href="mailto:hello@harknesstraining.com" data-email>hello@harknesstraining.com</a></div>
           <p class="phone" data-phone></p>
           <div class="share-line">Not the one who decides? <span class="share-wrap"><button type="button" class="share-btn" data-share-menu aria-expanded="false" aria-controls="share-menu">Send this page to your manager</button><span class="share-menu" id="share-menu" role="menu" hidden><a role="menuitem" data-share-to="gmail" target="_blank" rel="noopener">Gmail</a><a role="menuitem" data-share-to="outlook" target="_blank" rel="noopener">Outlook</a><a role="menuitem" data-share-to="mailto">Email app</a><button type="button" role="menuitem" data-share-to="copy">Copy link</button></span></span><span class="share-note" role="status" aria-live="polite"></span></div>
@@ -716,7 +673,7 @@
             <div class="field"><label for="webs-email">Work email</label><input id="webs-email" name="email" type="email" autocomplete="email" required></div>
           </div>
           <div class="field"><label for="webs-co">Company</label><input id="webs-co" name="company" autocomplete="organization"></div>
-          <div class="field"><label for="webs-msg">What's on your mind?</label><textarea id="webs-msg" name="message" placeholder="The conversation your team dreads, or a question about Open Lab."></textarea></div>
+          <div class="field"><label for="webs-msg">What's on your mind?</label><textarea id="webs-msg" name="message" placeholder="The conversation you need to get right, or a question about Open Lab."></textarea></div>
           <button class="btn btn-blue" type="submit">Send message</button>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
@@ -734,8 +691,8 @@
         <p class="foot-status"><span class="dot" aria-hidden="true"></span>Next Open Lab: <a href="open-lab.html" data-next-date style="color:inherit;text-decoration:none">soon</a></p>
       </div>
       <nav class="foot-cols" aria-label="Footer">
-        <div><h4>Product</h4><a href="index.html#how">How it works</a><a href="open-lab.html">Open Lab</a><a href="engineering-manager-training.html">New managers</a><a href="aerospace-defense-teams.html">Aerospace and defense</a><a href="difficult-conversations-training.html">Difficult conversations</a><a href="index.html#programs">Pricing</a><a href="custom.html">Custom programs</a><a href="index.html#faq">FAQ</a></div>
-        <div><h4>Get started</h4><a href="open-lab.html">Save a seat</a><a href="demo.html">Book a demo</a><a href="index.html#estimate">Get an estimate</a></div>
+        <div><h4>Product</h4><a href="index.html#how">How it works</a><a href="open-lab.html">Open Lab</a><a href="engineering-manager-training.html">New managers</a><a href="aerospace-defense-teams.html">Aerospace and defense</a><a href="difficult-conversations-training.html">Difficult conversations</a><a href="index.html#programs">Pricing</a><a href="custom.html">Custom programs</a><a href="faq.html">FAQ</a></div>
+        <div><h4>Get started</h4><a href="open-lab.html">Save a free Open Lab seat</a><a href="demo.html">Book a 20-minute demo</a><a href="index.html#estimate">Get an estimate</a></div>
         <div><h4>Contact</h4><a href="mailto:hello@harknesstraining.com" data-email>hello@harknesstraining.com</a><a href="tel:+13108965379" data-phone>(310) 896-5379</a><span>222 N. Pacific Coast Hwy<br>El Segundo, CA</span></div>
       </nav>
     </div>

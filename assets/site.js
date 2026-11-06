@@ -97,10 +97,10 @@ HTS.renderSchedule = function (el) {
     var sess = list.map(function (s) {
       var ext = HTS.luma ? ' target="_blank" rel="noopener"' : "";
       return '<div class="session ' + (s === HTS.openNight.online ? "s-online" : "s-inperson") + '"><span class="fmt">' + s.label + '</span><span class="when">' + s.time + '</span><span class="where">' + s.where + '</span>' +
-        '<a class="btn btn-hot" href="' + HTS.registerLink(d, s) + '"' + ext + ' data-session="' + HTS.fmtDate(d.date, true) + ' · ' + s.label + ' · ' + s.time + '" aria-label="Save a seat, ' + s.label + ', ' + HTS.fmtDate(d.date, true) + '">Save a seat</a></div>';
+        '<a class="btn btn-hot" href="' + HTS.registerLink(d, s) + '"' + ext + ' data-session="' + HTS.fmtDate(d.date, true) + ' · ' + s.label + ' · ' + s.time + '" aria-label="Save a free Open Lab seat, ' + s.label + ', ' + HTS.fmtDate(d.date, true) + '">Save a free Open Lab seat</a></div>';
     }).join("");
     return '<li class="date' + (i === 0 ? " next" : "") + '"><div class="date-head">' + (i === 0 ? '<span class="date-tag">Next</span>' : "") +
-      '<span class="date-day">' + HTS.fmtDate(d.date, false) + '</span></div><div class="sessions' + (list.length === 1 ? " one" : "") + '">' + sess + "</div></li>";
+      '<span class="date-day">' + HTS.fmtDate(d.date, true) + '</span><span class="date-sub">Free · 90 minutes</span></div><div class="sessions' + (list.length === 1 ? " one" : "") + '">' + sess + "</div></li>";
   }).join("");
 };
 
@@ -455,8 +455,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var onEvents = !!document.getElementById("open-lab");
     var bar = document.createElement("nav");
     bar.className = "mbar"; bar.setAttribute("aria-label", "Next step");
-    bar.innerHTML = '<a class="btn btn-hot" href="' + (onEvents ? "#open-lab" : "index.html#open-lab") + '">Save a seat</a>' +
-                    (document.getElementById("book") ? '<a class="btn btn-blue" href="#book">Pick a time</a>' : '<a class="btn btn-blue" href="demo.html">Book a demo</a>');
+    bar.innerHTML = '<a class="btn btn-hot" href="' + (onEvents ? "#open-lab" : "open-lab.html") + '">Save a free Open Lab seat</a>' +
+                    (document.getElementById("book") ? '<a class="btn btn-ghost" href="#book">Book a 20-minute demo</a>' : '<a class="btn btn-ghost" href="demo.html">Book a 20-minute demo</a>');
     document.body.appendChild(bar);
     function check() {
       var foot = Array.prototype.filter.call(document.querySelectorAll("footer"), function (f) { return f.offsetParent !== null; })[0];
@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dlg.innerHTML =
       '<form class="form" data-hts data-ok="You\'re in. We\'ll email the details within a day." novalidate>' +
       '<button type="button" class="reg-x" aria-label="Close">×</button>' +
-      '<p class="eyebrow">Save a seat · free</p><h3 class="reg-h">Open Lab</h3><p class="reg-when" data-reg-when></p>' +
+      '<h3 class="reg-h">Save a free Open Lab seat</h3><p class="reg-when" data-reg-when></p>' +
       '<input type="hidden" name="_subject" value="Open Lab registration"><input type="hidden" name="session" data-reg-session>' +
       '<div class="row"><div class="field"><label for="reg-name">Name</label><input id="reg-name" name="name" autocomplete="name" required></div>' +
       '<div class="field"><label for="reg-email">Work email</label><input id="reg-email" name="email" type="email" autocomplete="email" required></div></div>' +
@@ -621,6 +621,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("[data-tally]").forEach(function (box) {
       var cue = box.querySelector(".tally-cue"), t = null;
       if (!box.querySelector(".tally-body")) return;
+      if (box.hasAttribute("data-tally-static")) return;
       box.classList.add("collapsible");
       function open() { box.classList.add("open"); if (cue) cue.setAttribute("aria-expanded", "true"); }
       function close() { box.classList.remove("open"); if (cue) cue.setAttribute("aria-expanded", "false"); }
@@ -830,7 +831,7 @@ function htsCalendarBookingConfirmed(data) {
   });
 })();
 (function () {
-  var named = /^(save a seat|book a demo|book a 20-minute demo|try it free at open lab|pick a time|pick a time for a demo)$/i;
+  var named = /^(save a seat|save a free open lab seat|book a demo|book a 20-minute demo|try it free at open lab|pick a time|pick a time for a demo)$/i;
   function labelOf(el) {
     return (el.textContent || "").replace(/\s+/g, " ").trim();
   }
