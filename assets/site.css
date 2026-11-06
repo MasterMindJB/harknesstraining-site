@@ -1298,3 +1298,7 @@ main>section.logo-band:not(.hero)::before{content:none}
 #how .step::before{content:counter(s);font-size:1.2rem;letter-spacing:0;line-height:1.2}
 #how .step b{font-weight:700;font-size:1.05rem;color:var(--ink)}
 #how .step p{margin-top:2px}
+
+/* Outcome line under each pricing tier. Prices and the tally grid are unchanged. */
+.vpath .outcome{display:block;margin:4px 0 6px;font-size:1.0625rem;line-height:1.5;font-weight:500;color:var(--ink)}
+.vpath .credit{display:block;margin-top:4px;font-size:1rem;line-height:1.45;font-weight:700;color:var(--ink)}
