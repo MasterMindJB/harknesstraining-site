@@ -32,7 +32,7 @@ Founding rates lock in for teams that start by Dec 31, 2026. Teams of 15 to 20 p
 - [Pricing](https://harknesstraining.com/pricing): Same prices as the home page.
 - [Custom programs](https://harknesstraining.com/custom): Build the scenarios from the team's own conversations.
 - [Book a demo](https://harknesstraining.com/demo): Free 20-minute demo.
-- [FAQ](https://harknesstraining.com/#faq): Questions people ask before signing up.
+- [FAQ](https://harknesstraining.com/faq): Questions people ask before signing up.
 - [Longer summary](https://harknesstraining.com/llms-full.txt): The same facts, plus the FAQ answers in plain text.
 
 ## Company accounts

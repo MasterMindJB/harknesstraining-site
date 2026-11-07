@@ -48,7 +48,7 @@ Later dates are listed on https://harknesstraining.com/open-lab as they come up.
 - Pricing (same figures as the home page): https://harknesstraining.com/pricing
 - Custom programs: https://harknesstraining.com/custom
 - Book a demo: https://harknesstraining.com/demo
-- FAQ: https://harknesstraining.com/#faq
+- FAQ: https://harknesstraining.com/faq
 - Short summary for tools: https://harknesstraining.com/llms.txt
 
 ## FAQ
