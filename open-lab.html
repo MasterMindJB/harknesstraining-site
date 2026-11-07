@@ -34,8 +34,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=60">
-<script src="assets/site.js?v=55"></script>
+<link rel="stylesheet" href="assets/site.css?v=61">
+<script src="assets/site.js?v=56"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -130,19 +130,17 @@
 <main id="main">
 <section class="ol-event" aria-labelledby="ol-title">
   <div class="ol-film" aria-hidden="true">
-    <!-- INTERIM only: existing homepage session loop (assets/hts-session-loop*).
-         Webcam/session footage, not Flight037, not an analogy montage.
-         Lower-thirds are clipped off in CSS. Final file: assets/open-lab/PUT-FLIGHT037-HERE.txt
-         and flight037Ready in assets/site.js. -->
+    <!-- Open Lab picture is the caption-free practice cut v3.
+         Desktop 1280x720, phone 640x800. Not the homepage session loop. -->
     <video class="ol-bg" muted playsinline loop preload="none" disablepictureinpicture
-           poster="assets/hts-session-loop-poster.jpg?v=5"
+           poster="assets/open-lab/openlab-practice-desktop-poster.jpg"
            data-ol-film
-           data-film="interim-homepage-session-loop"
-           width="1920" height="1080">
-      <source media="(max-width: 600px)" data-src="assets/hts-session-loop-4x5.webm?v=5" type="video/webm">
-      <source media="(max-width: 600px)" data-src="assets/hts-session-loop-4x5.mp4?v=5" type="video/mp4">
-      <source data-src="assets/hts-session-loop.webm?v=5" type="video/webm">
-      <source data-src="assets/hts-session-loop.mp4?v=5" type="video/mp4">
+           data-film="openlab-practice-v3"
+           width="1280" height="720">
+      <source media="(max-width: 600px)" data-src="assets/open-lab/openlab-practice-mobile.webm" type="video/webm">
+      <source media="(max-width: 600px)" data-src="assets/open-lab/openlab-practice-mobile.mp4" type="video/mp4">
+      <source data-src="assets/open-lab/openlab-practice-desktop.webm" type="video/webm">
+      <source data-src="assets/open-lab/openlab-practice-desktop.mp4" type="video/mp4">
     </video>
     <div class="ol-shade"></div>
   </div>

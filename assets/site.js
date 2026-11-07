@@ -787,14 +787,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
 
-/* Open Lab event film.
-   INTERIM only: assets/hts-session-loop* — the current homepage session loop.
-   That file is webcam/session footage. It is not Flight037 and it is not an
-   analogy montage. Its lower-third captions are clipped off by CSS.
-   When a reviewed Flight037 file is actually in assets/open-lab/, set
-   flight037Ready to true. Do not point this at a file that is not there.
-   Required then: flight037-loop.mp4, flight037-loop.webm, flight037-poster.jpg
-   Optional phone crop: flight037-loop-4x5.mp4 / .webm and flight037-poster-4x5.jpg */
+/* Open Lab event film: assets/open-lab/openlab-practice-* only.
+   Desktop 1280x720, phone 640x800. Not the homepage session loop. */
 (function () {
   function init() {
     var v = document.querySelector("[data-ol-film]");
@@ -805,59 +799,25 @@ document.addEventListener("DOMContentLoaded", function () {
     v.defaultMuted = true;
     v.playsInline = true;
     v.setAttribute("playsinline", "");
-    function pack(poster, sources) { return { poster: poster, sources: sources }; }
-    var interim = mobile
-      ? pack("assets/hts-session-loop-4x5-poster.jpg?v=5", [
-          ["assets/hts-session-loop-4x5.webm?v=5", "video/webm"],
-          ["assets/hts-session-loop-4x5.mp4?v=5", "video/mp4"]
-        ])
-      : pack("assets/hts-session-loop-poster.jpg?v=5", [
-          ["assets/hts-session-loop.webm?v=5", "video/webm"],
-          ["assets/hts-session-loop.mp4?v=5", "video/mp4"]
-        ]);
-    var finalDesk = pack("assets/open-lab/flight037-poster.jpg", [
-      ["assets/open-lab/flight037-loop.webm", "video/webm"],
-      ["assets/open-lab/flight037-loop.mp4", "video/mp4"]
-    ]);
-    var finalMob = pack("assets/open-lab/flight037-poster-4x5.jpg", [
-      ["assets/open-lab/flight037-loop-4x5.webm", "video/webm"],
-      ["assets/open-lab/flight037-loop-4x5.mp4", "video/mp4"]
-    ]);
+    if (mobile) v.poster = "assets/open-lab/openlab-practice-mobile-poster.jpg";
+    if (reduce) return;
+    v.querySelectorAll("source[data-src]").forEach(function (s) { s.src = s.dataset.src; });
+    v.load();
     function play() {
       var pr = v.play();
       if (pr && pr.catch) pr.catch(function () {});
     }
-    var wired = false;
-    function mount(p, label) {
-      v.poster = p.poster;
-      v.setAttribute("data-film", label);
-      while (v.firstChild) v.removeChild(v.firstChild);
-      p.sources.forEach(function (s) {
-        var el = document.createElement("source");
-        el.src = s[0];
-        el.type = s[1];
-        v.appendChild(el);
-      });
-      if (reduce) return;
-      v.load();
-      if (wired) { play(); return; }
-      wired = true;
-      if (!("IntersectionObserver" in window)) { play(); return; }
-      var seen = false;
-      new IntersectionObserver(function (es) {
-        var on = es.some(function (e) { return e.isIntersecting && e.intersectionRatio >= 0.25; });
-        if (on && !document.hidden) { seen = true; play(); }
-        else if (!v.paused) v.pause();
-      }, { threshold: [0, 0.25, 0.6] }).observe(v);
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) v.pause();
-        else if (seen) play();
-      });
-    }
-    /* Leave false until assets/open-lab/flight037-loop.mp4 (and the files
-       listed above) are actually in the repo. A missing file is never requested. */
-    var flight037Ready = false;
-    mount(flight037Ready ? (mobile ? finalMob : finalDesk) : interim, flight037Ready ? "flight037" : "interim-homepage-session-loop");
+    if (!("IntersectionObserver" in window)) { play(); return; }
+    var seen = false;
+    new IntersectionObserver(function (es) {
+      var on = es.some(function (e) { return e.isIntersecting && e.intersectionRatio >= 0.25; });
+      if (on && !document.hidden) { seen = true; play(); }
+      else if (!v.paused) v.pause();
+    }, { threshold: [0, 0.25, 0.6] }).observe(v);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) v.pause();
+      else if (seen) play();
+    });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
