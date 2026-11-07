@@ -1401,6 +1401,12 @@ main>section.logo-band + section.gap-sec{padding-top:72px}
 }
 :root[data-theme="dark"] #how .step::before{color:var(--sky)}
 :root[data-theme="dark"] .open-support{color:var(--ink)}
+main>section.gap-sec:has(+ .daniel-quote){padding-bottom:28px}
+main>section.daniel-quote{padding-block:28px 40px}
+@media (min-width:900px){
+  main>section.gap-sec:has(+ .daniel-quote){padding-bottom:36px}
+  main>section.daniel-quote{padding-block:32px 48px}
+}
 .kick-line a,.share-line a,.share-btn{color:#1C2C5B;text-decoration-color:var(--sky)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kick-line a,:root:not([data-theme="light"]) .share-line a,:root:not([data-theme="light"]) .share-btn{color:var(--sky)}}
 :root[data-theme="dark"] .kick-line a,:root[data-theme="dark"] .share-line a,:root[data-theme="dark"] .share-btn{color:var(--sky)}
