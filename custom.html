@@ -35,9 +35,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=52">
+<link rel="stylesheet" href="assets/site.css?v=62">
 <link rel="prefetch" href="index.html"><link rel="prefetch" href="demo.html"><link rel="prefetch" href="custom.html">
-<script src="assets/site.js?v=53"></script>
+<script src="assets/site.js?v=57"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -86,16 +86,25 @@
   </div>
 </header>
 <main id="main">
-<section class="hero page-hero">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        
-        <h1 style="margin-top:0">Built from your team's real moments</h1>
-        <p class="pos">Tell us the conversations your leaders keep facing.<br>We write the scenarios.<br>We brief trained actors to push back the way your people do.<br>We run it on your schedule.</p>
-        <div class="cta-row"><a class="btn btn-hot" href="#pick">Build your scenarios</a></div>
-      </div>
-    </div>
+<section class="ol-event cu-event" aria-labelledby="cu-title" style="--ol-pos:center 30%;--ol-pos-m:center 35%;--ol-still:url('custom/custom-practice-desktop-poster.jpg');--ol-still-m:url('custom/custom-practice-mobile-poster.jpg')">
+  <div class="ol-film" aria-hidden="true">
+    <video class="ol-bg" muted playsinline loop preload="none" disablepictureinpicture
+           poster="assets/custom/custom-practice-desktop-poster.jpg"
+           data-poster-mobile="assets/custom/custom-practice-mobile-poster.jpg"
+           data-ol-film
+           data-film="custom-practice"
+           width="1280" height="720">
+      <source media="(max-width: 600px)" data-src="assets/custom/custom-practice-mobile.webm" type="video/webm">
+      <source media="(max-width: 600px)" data-src="assets/custom/custom-practice-mobile.mp4" type="video/mp4">
+      <source data-src="assets/custom/custom-practice-desktop.webm" type="video/webm">
+      <source data-src="assets/custom/custom-practice-desktop.mp4" type="video/mp4">
+    </video>
+    <div class="ol-shade"></div>
+  </div>
+  <div class="wrap ol-event-copy">
+    <h1 id="cu-title">Built from your team's real moments</h1>
+    <p class="pos">Tell us the conversations your leaders keep facing.<br>We write the scenarios.<br>We brief trained actors to push back the way your people do.<br>We run it on your schedule.</p>
+    <div class="cta-row"><a class="btn btn-hot" href="#pick">Build your scenarios</a></div>
   </div>
 </section>
 
