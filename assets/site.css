@@ -1306,11 +1306,11 @@ main>section.logo-band:not(.hero)::before{content:none}
 /* Open Lab event. Picture is assets/open-lab/openlab-practice-* (v3), shown full-frame. */
 main>section.ol-event{padding:0;background:#1C2C5B;color:#F3F7FC;overflow:hidden}
 main>section.ol-event::before{content:none}
-.ol-event{position:relative;isolation:isolate;min-height:min(92vh,860px);display:flex;align-items:flex-end}
+.ol-event{position:relative;isolation:isolate;min-height:min(92vh,860px);display:flex;align-items:flex-start}
 .ol-film{position:absolute;inset:0;z-index:0;overflow:hidden;background:#1C2C5B center/cover no-repeat}
-.ol-bg{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center center;display:block}
-.ol-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,44,91,.55) 0%,rgba(28,44,91,.28) 36%,rgba(28,44,91,.78) 68%,#1C2C5B 100%)}
-.ol-event-copy{position:relative;z-index:1;width:100%;padding-top:clamp(64px,10vh,120px);padding-bottom:clamp(48px,8vh,88px)}
+.ol-bg{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--ol-pos,center 40%);display:block}
+.ol-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,44,91,.82) 0%,rgba(28,44,91,.55) 28%,rgba(28,44,91,.22) 58%,rgba(28,44,91,.38) 100%)}
+.ol-event-copy{position:relative;z-index:1;width:100%;padding-top:clamp(28px,4.5vh,52px);padding-bottom:clamp(20px,3vh,36px)}
 .ol-event h1{font-family:Poppins,system-ui,sans-serif;font-weight:800;font-size:clamp(4.4rem,12vw,8.6rem);line-height:.9;letter-spacing:-.035em;text-transform:uppercase;color:#F3F7FC;margin:0}
 .ol-sub{margin:16px 0 0;font-size:clamp(1.45rem,2.6vw,2rem);font-weight:600;line-height:1.25;color:#F3F7FC}
 .ol-support{margin:14px 0 0;max-width:38rem;font-size:1.0625rem;line-height:1.6;color:#E4EEF8}
@@ -1319,16 +1319,18 @@ main>section.ol-event::before{content:none}
 .ol-event .cta-row{margin-top:28px}
 .ol-event .btn-ghost{color:#F3F7FC;border-color:rgba(243,247,252,.75)}
 @media (max-width:600px){
-  .ol-event{min-height:calc(100svh - var(--bar-h));align-items:flex-end}
+  .ol-event{min-height:calc(100svh - var(--bar-h));align-items:flex-start}
   .ol-event h1{font-size:clamp(3.4rem,18vw,4.6rem)}
   .ol-event .cta-row .btn{width:100%;justify-content:center}
-  .ol-bg{object-position:center top}
-  .ol-shade{background:linear-gradient(180deg,rgba(28,44,91,.5) 0%,rgba(28,44,91,.22) 34%,rgba(28,44,91,.8) 70%,#1C2C5B 100%)}
+  .ol-bg{object-position:var(--ol-pos-m,center 35%)}
+  .ol-shade{background:linear-gradient(180deg,rgba(28,44,91,.84) 0%,rgba(28,44,91,.58) 32%,rgba(28,44,91,.2) 62%,rgba(28,44,91,.36) 100%)}
 }
+.cu-event h1{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.05;letter-spacing:-.02em;text-transform:none}
+.cu-event .pos{margin-top:18px;max-width:40rem;color:#F3F7FC;font-size:1.15rem;line-height:1.6}
 @media (prefers-reduced-motion:reduce){
   .ol-bg{display:none}
-  .ol-film{background-image:url("open-lab/openlab-practice-desktop-poster.jpg");background-size:cover;background-position:center}
+  .ol-film{background-image:var(--ol-still);background-size:cover;background-position:var(--ol-pos,center 40%)}
 }
 @media (prefers-reduced-motion:reduce) and (max-width:600px){
-  .ol-film{background-image:url("open-lab/openlab-practice-mobile-poster.jpg")}
+  .ol-film{background-image:var(--ol-still-m,var(--ol-still));background-position:var(--ol-pos-m,center 35%)}
 }

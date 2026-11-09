@@ -787,7 +787,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
 
-/* Open Lab event film: assets/open-lab/openlab-practice-* only.
+/* Hero film on Open Lab and Custom. Each page sets its own sources.
    Desktop 1280x720, phone 640x800. Not the homepage session loop. */
 (function () {
   function init() {
@@ -799,7 +799,7 @@ document.addEventListener("DOMContentLoaded", function () {
     v.defaultMuted = true;
     v.playsInline = true;
     v.setAttribute("playsinline", "");
-    if (mobile) v.poster = "assets/open-lab/openlab-practice-mobile-poster.jpg";
+    if (mobile && v.getAttribute("data-poster-mobile")) v.poster = v.getAttribute("data-poster-mobile");
     if (reduce) return;
     v.querySelectorAll("source[data-src]").forEach(function (s) { s.src = s.dataset.src; });
     v.load();
