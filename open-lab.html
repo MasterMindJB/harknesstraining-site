@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=63">
+<link rel="stylesheet" href="assets/site.css?v=69">
 <script src="assets/site.js?v=57"></script>
 <script type="application/ld+json">
 {
@@ -128,15 +128,18 @@
   </div>
 </header>
 <main id="main">
-<section class="ol-event" aria-labelledby="ol-title" style="--ol-pos:center 40%;--ol-pos-m:center 35%;--ol-still:url('open-lab/openlab-practice-desktop-poster.jpg');--ol-still-m:url('open-lab/openlab-practice-mobile-poster.jpg')">
+<section class="ol-event" aria-labelledby="ol-title" style="--ol-pos:center bottom;--ol-pos-m:center bottom;--ol-still:url('open-lab/openlab-practice-desktop-poster.jpg');--ol-still-m:url('open-lab/openlab-practice-mobile-poster.jpg')">
   <div class="ol-film" aria-hidden="true">
-    <!-- Open Lab picture is the caption-free practice cut v3.
+    <!-- Open Lab picture is the caption-free practice cut v4.
          Desktop 1280x720, phone 640x800. Not the homepage session loop. -->
     <video class="ol-bg" muted playsinline loop preload="none" disablepictureinpicture
            poster="assets/open-lab/openlab-practice-desktop-poster.jpg"
+           data-poster-mobile="assets/open-lab/openlab-practice-mobile-poster.jpg"
            data-ol-film
-           data-film="openlab-practice-v3"
+           data-film="openlab-practice-v4"
            width="1280" height="720">
+      <source media="(max-width: 600px)" data-src="assets/open-lab/openlab-practice-mobile.webm" type="video/webm">
+      <source media="(max-width: 600px)" data-src="assets/open-lab/openlab-practice-mobile.mp4" type="video/mp4">
       <source data-src="assets/open-lab/openlab-practice-desktop.webm" type="video/webm">
       <source data-src="assets/open-lab/openlab-practice-desktop.mp4" type="video/mp4">
     </video>
