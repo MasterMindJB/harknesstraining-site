@@ -1,0 +1,119 @@
+/* Homepage rewrite preview only.
+   Linked from preview/home-rewrite.html and from nowhere else.
+   These rules are the PR 15 homepage additions. They are not in site.css,
+   so the live homepage and every other page keep their current styles. */
+
+/* rev 59: homepage hierarchy. Poppins only. Amber is heat: primary CTA, next date, Kickoff. */
+body{font-size:17px;line-height:1.6}
+.bar-ctas{grid-area:cta;display:flex;align-items:center;gap:8px}
+.bar-ctas .btn{grid-area:auto;font-size:.72rem;letter-spacing:.04em;padding:.62em .9em;white-space:nowrap;line-height:1.25}
+.bar .seat{font-size:.72rem;padding:.62em .9em}
+@media (max-width:1100px){
+  .bar-ctas .btn,.bar .seat{font-size:.66rem;padding:.55em .7em}
+}
+@media (max-width:860px){
+  :root{--bar-h:124px}
+  .bar{grid-template-columns:1fr;grid-template-areas:"logo" "cta" "tabs";padding-block:8px 2px;gap:6px 10px}
+  .bar .mark svg{width:118px}
+  .bar-ctas{width:100%}
+  .bar-ctas .btn,.bar .seat{flex:1;justify-content:center;white-space:nowrap;text-align:center;font-size:.6rem;letter-spacing:.03em;padding:.6em .35em}
+  .tabs{margin-inline:0}
+  .tab{padding:8px 8px;font-size:.68rem}
+}
+.hero-proof{margin:18px 0 0;font-size:1rem;line-height:1.5;color:var(--on-navy-muted)}
+.hero-proof a{color:var(--on-navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--sky)}
+.hero-proof a:hover{color:var(--sky)}
+.rot,.hero h1 .rot,.hero h1.h-rotl .rot,
+:root[data-theme="dark"] .rot,:root[data-theme="light"] .rot{color:var(--amber)!important;background:none!important}
+.logo-band h2{color:var(--muted);letter-spacing:.12em;font-size:.8rem;font-weight:600}
+:root{--bp-o:.035}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bp-o:.05}}
+:root[data-theme="dark"]{--bp-o:.05}
+.hero::after{opacity:.07}
+.takes-sec::before{opacity:.06}
+footer.site-foot::before{opacity:.05}
+main>section.gap-sec,
+main>section#how,
+main>section.takes-sec,
+main>section#open-lab,
+main>section#programs,
+main>section.faq-sec,
+main>section.contact{padding-block:72px}
+@media (min-width:900px){
+  main>section.gap-sec,
+  main>section#how,
+  main>section.takes-sec,
+  main>section#open-lab,
+  main>section#programs,
+  main>section.faq-sec,
+  main>section.contact{padding-block:120px}
+}
+main>section.logo-band + section.gap-sec{padding-top:72px}
+@media (min-width:900px){main>section.logo-band + section.gap-sec{padding-top:120px}}
+.gap-lede{margin-top:18px;max-width:46rem;font-size:1.0625rem;line-height:1.6;color:var(--ink)}
+.deck{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:980px){.deck{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#how .how-meta{margin-top:14px;max-width:42rem;font-size:1.0625rem;line-height:1.6;color:var(--ink)}
+#how .steps{max-width:44rem;margin-top:28px}
+#how .step{padding-block:22px}
+#how .step::before{font-size:1.35rem;color:var(--navy)}
+#how .step b{font-size:1.125rem}
+#how .step p{margin-top:6px;font-size:1.0625rem;line-height:1.6;color:var(--ink)}
+.take-frame{margin:16px auto 0;max-width:42rem;text-align:center;font-size:1.0625rem;line-height:1.6;color:var(--on-navy)}
+.takes-sec .beat-key{justify-content:center;margin:18px 0 8px;font-size:.8rem}
+.takes-sec .voice.wide{margin-top:22px}
+.tk-sub{font-size:.95rem;font-weight:500;color:var(--on-navy-muted)}
+.tx{font-size:1.0625rem;line-height:1.6}
+.open-support{margin-top:14px;max-width:22em;font-family:var(--display);font-weight:700;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.25;color:var(--navy);letter-spacing:-.01em}
+#open-lab .open-lede{font-size:1.0625rem;line-height:1.6;color:var(--ink);max-width:46rem}
+.dates{gap:18px}
+.date{grid-template-columns:1fr;gap:16px;padding:28px 28px 22px;border-radius:16px}
+.date-day{font-size:clamp(1.55rem,2.6vw,2.05rem);letter-spacing:-.02em}
+.date-sub{display:block;margin-top:6px;font-family:var(--body);font-weight:500;font-size:1.0625rem;letter-spacing:0;text-transform:none;line-height:1.4;color:var(--muted)}
+.sessions{grid-template-columns:1fr}
+.session{padding:18px 18px 16px;gap:8px}
+.session .when{font-size:1.0625rem}
+.session .where{font-size:1rem;line-height:1.5}
+.session .btn,.session.s-online .btn{font-size:.82rem;line-height:1.3;white-space:normal;text-align:center;background:var(--amber);color:#1C2C5B}
+.light .date.next{box-shadow:0 16px 36px -24px rgba(28,44,91,.45)}
+.alt-cta{margin-top:22px;font-size:1.0625rem;line-height:1.6}
+.alt-cta a{font-weight:600}
+.grow-h .grow-strong{display:block;color:var(--ink);font-size:1em;line-height:1.15}
+.vpath li.key{background:color-mix(in srgb,var(--amber) 16%,transparent);border-radius:10px}
+.faq summary{font-size:1.0625rem;line-height:1.45;padding:18px 20px}
+.faq details p{font-size:1.0625rem;line-height:1.6;padding:0 20px 18px}
+.faq-more{margin-top:18px;font-size:1.0625rem}
+.faq-more a{font-weight:600}
+.close-line{margin-top:14px;max-width:36rem;font-size:1.0625rem;line-height:1.6;color:var(--ink)}
+.close-ctas{margin-top:22px}
+.btn-line{background:transparent;border-color:#1C2C5B;color:#1C2C5B}
+.btn-line:hover{background:color-mix(in srgb,#1C2C5B 6%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-line{border-color:var(--sky);color:var(--sky)}}
+:root[data-theme="dark"] .btn-line{border-color:var(--sky);color:var(--sky)}
+@media (max-width:760px){
+  .mbar{grid-template-columns:1.25fr .75fr}
+  .mbar .btn{font-size:.62rem;line-height:1.2;white-space:nowrap;text-align:center;padding:.75em .35em}
+  .mbar .btn-ghost{color:#F3F7FC;border-color:rgba(243,247,252,.75)}
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) #how .step::before{color:var(--sky)}
+  :root:not([data-theme="light"]) .open-support{color:var(--ink)}
+}
+:root[data-theme="dark"] #how .step::before{color:var(--sky)}
+:root[data-theme="dark"] .open-support{color:var(--ink)}
+main>section.gap-sec:has(+ .daniel-quote){padding-bottom:28px}
+main>section.daniel-quote{padding-block:28px 40px}
+@media (min-width:900px){
+  main>section.gap-sec:has(+ .daniel-quote){padding-bottom:36px}
+  main>section.daniel-quote{padding-block:32px 48px}
+}
+.kick-line a,.share-line a,.share-btn{color:#1C2C5B;text-decoration-color:var(--sky)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kick-line a,:root:not([data-theme="light"]) .share-line a,:root:not([data-theme="light"]) .share-btn{color:var(--sky)}}
+:root[data-theme="dark"] .kick-line a,:root[data-theme="dark"] .share-line a,:root[data-theme="dark"] .share-btn{color:var(--sky)}
+
+/* Prices stay open on this page. Shared site.js still adds .collapsible
+   unless it sees data-tally-static, which the live script does not. */
+.tally[data-tally-static].collapsible .tally-body{grid-template-rows:1fr}
+.tally[data-tally-static].collapsible .tally-in{opacity:1;transform:none;transition:none}
+.tally[data-tally-static].collapsible .tally-head{cursor:default}
+.tally[data-tally-static].collapsible.open .vpath li{animation:none}
