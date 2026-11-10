@@ -1299,9 +1299,17 @@ main>section.logo-band:not(.hero)::before{content:none}
 #how .step b{font-weight:700;font-size:1.05rem;color:var(--ink)}
 #how .step p{margin-top:2px}
 
-/* Outcome line under each pricing tier. Prices and the tally grid are unchanged. */
-.vpath .outcome{display:block;margin:4px 0 6px;font-size:1.0625rem;line-height:1.5;font-weight:500;color:var(--ink)}
-.vpath .credit{display:block;margin-top:4px;font-size:1rem;line-height:1.45;font-weight:700;color:var(--ink)}
+/* Streamlined pricing list. Credit sits on the facts line, with a middot on desktop. */
+.vpath li{padding-block:12px}
+.vpath .outcome{display:block;margin:2px 0 4px;font-size:1.02rem;line-height:1.4;font-weight:500;color:var(--ink)}
+.vpath .facts{display:block;color:var(--muted);font-size:.86rem;line-height:1.4}
+.vpath .credit{display:inline;margin:0;font-size:inherit;font-weight:600;line-height:inherit;color:var(--ink)}
+.vpath .facts .credit::before{content:"·";margin:0 .55em;font-weight:500;color:var(--muted)}
+.kick-line{margin-top:18px}
+@media (max-width:560px){
+  .vpath .facts .credit{display:block;margin-top:4px}
+  .vpath .facts .credit::before{content:none;margin:0}
+}
 
 /* Open Lab and Custom heroes. Picture is full-bleed behind the copy.
    Open Lab is openlab-practice-* (v5). Custom is custom-practice-* (v5). */
