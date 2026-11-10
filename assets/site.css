@@ -1303,7 +1303,8 @@ main>section.logo-band:not(.hero)::before{content:none}
 .vpath .outcome{display:block;margin:4px 0 6px;font-size:1.0625rem;line-height:1.5;font-weight:500;color:var(--ink)}
 .vpath .credit{display:block;margin-top:4px;font-size:1rem;line-height:1.45;font-weight:700;color:var(--ink)}
 
-/* Open Lab event. Picture is assets/open-lab/openlab-practice-* (v3), shown full-frame. */
+/* Open Lab and Custom heroes. Picture is full-bleed behind the copy.
+   Open Lab is openlab-practice-* (v5). Custom is custom-practice-* (v5). */
 main>section.ol-event{padding:0;background:#1C2C5B;color:#F3F7FC;overflow:hidden}
 main>section.ol-event::before{content:none}
 .ol-event{position:relative;isolation:isolate;min-height:min(92vh,860px);display:flex;align-items:flex-start}
@@ -1325,12 +1326,24 @@ main>section.ol-event::before{content:none}
   .ol-bg{object-position:var(--ol-pos-m,center 35%)}
   .ol-shade{background:linear-gradient(180deg,rgba(28,44,91,.84) 0%,rgba(28,44,91,.58) 32%,rgba(28,44,91,.2) 62%,rgba(28,44,91,.36) 100%)}
 }
+/* Faces sit low in both clips. Keep the bottom of the frame in view, and
+   stop a wide hero from running past the first screen. */
+.ol-event{min-height:min(92vh,860px,calc(100svh - var(--bar-h) - 24px))}
+@media (max-width:600px){
+  .ol-event{min-height:calc(100svh - var(--bar-h))}
+  .ol-event .ol-event-copy{padding-top:18px}
+  .ol-event .ol-sub{margin-top:10px}
+  .ol-event .ol-support{margin-top:8px}
+  .ol-event .ol-when{margin-top:10px}
+  .ol-event .cta-row{margin-top:14px}
+  .cu-event .pos{margin-top:10px}
+}
 .cu-event h1{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.05;letter-spacing:-.02em;text-transform:none}
 .cu-event .pos{margin-top:18px;max-width:40rem;color:#F3F7FC;font-size:1.15rem;line-height:1.6}
 @media (prefers-reduced-motion:reduce){
   .ol-bg{display:none}
-  .ol-film{background-image:var(--ol-still);background-size:cover;background-position:var(--ol-pos,center 40%)}
+  .ol-film{background-image:var(--ol-still);background-size:cover;background-position:var(--ol-pos,center bottom)}
 }
 @media (prefers-reduced-motion:reduce) and (max-width:600px){
-  .ol-film{background-image:var(--ol-still-m,var(--ol-still));background-position:var(--ol-pos-m,center 35%)}
+  .ol-film{background-image:var(--ol-still-m,var(--ol-still));background-position:var(--ol-pos-m,center bottom)}
 }
