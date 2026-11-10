@@ -1327,10 +1327,64 @@ main>section.ol-event::before{content:none}
 }
 .cu-event h1{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.05;letter-spacing:-.02em;text-transform:none}
 .cu-event .pos{margin-top:18px;max-width:40rem;color:#F3F7FC;font-size:1.15rem;line-height:1.6}
+
+/* Open Lab only. Copy stays off the face, and the hero ends at the bottom of the first screen. */
+.ol-event:not(.cu-event){
+  height:calc(100svh - var(--bar-h));
+  min-height:calc(100svh - var(--bar-h));
+  max-height:calc(100svh - var(--bar-h));
+  display:grid;
+  grid-template-columns:minmax(280px,34vw) minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr);
+  align-items:stretch;
+  background:#1C2C5B;
+}
+.ol-event:not(.cu-event) .ol-film{
+  position:relative;
+  grid-column:2;
+  grid-row:1;
+  min-height:0;
+  height:100%;
+}
+.ol-event:not(.cu-event) .ol-event-copy{
+  grid-column:1;
+  grid-row:1;
+  align-self:center;
+  width:auto;
+  max-width:none;
+  margin:0;
+  padding:clamp(16px,3vh,36px) 28px clamp(16px,3vh,36px) max(20px,env(safe-area-inset-left));
+}
+.ol-event:not(.cu-event) h1{font-size:clamp(3.1rem,4.6vw,5.6rem)}
+.ol-event:not(.cu-event) .ol-support{max-width:28rem}
+.ol-event:not(.cu-event) .ol-bg{inset:0 0 18px 0;width:100%;height:calc(100% - 18px);object-fit:contain;object-position:center center}
+.ol-event:not(.cu-event) .ol-shade{background:linear-gradient(90deg,#1C2C5B 0%,rgba(28,44,91,.4) 7%,rgba(28,44,91,0) 16%)}
+@media (max-width:800px){
+  .ol-event:not(.cu-event){
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr);
+  }
+  .ol-event:not(.cu-event) .ol-event-copy{
+    grid-column:1;
+    grid-row:1;
+    align-self:start;
+    padding:14px 16px 12px;
+  }
+  .ol-event:not(.cu-event) .ol-film{grid-column:1;grid-row:2}
+  .ol-event:not(.cu-event) h1{font-size:clamp(2.5rem,11vw,3.1rem)}
+  .ol-event:not(.cu-event) .ol-sub{margin-top:8px;font-size:1.25rem}
+  .ol-event:not(.cu-event) .ol-support{margin-top:8px;font-size:1rem;line-height:1.45}
+  .ol-event:not(.cu-event) .ol-when{margin-top:10px}
+  .ol-event:not(.cu-event) .cta-row{margin-top:12px}
+  .ol-event:not(.cu-event) .ol-bg{inset:0 0 12px 0;width:100%;height:calc(100% - 12px);object-fit:contain;object-position:center center}
+  .ol-event:not(.cu-event) .ol-shade{background:linear-gradient(180deg,#1C2C5B 0%,rgba(28,44,91,0) 14%)}
+}
 @media (prefers-reduced-motion:reduce){
   .ol-bg{display:none}
   .ol-film{background-image:var(--ol-still);background-size:cover;background-position:var(--ol-pos,center 40%)}
+  .ol-event:not(.cu-event) .ol-film{background-size:contain;background-position:center center;background-repeat:no-repeat}
 }
 @media (prefers-reduced-motion:reduce) and (max-width:600px){
   .ol-film{background-image:var(--ol-still-m,var(--ol-still));background-position:var(--ol-pos-m,center 35%)}
+  .ol-event:not(.cu-event) .ol-film{background-image:var(--ol-still);background-size:contain;background-position:center center}
 }
