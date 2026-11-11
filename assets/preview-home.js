@@ -34,8 +34,8 @@
       var book = document.getElementById("book");
       bar.innerHTML = '<a class="btn btn-hot" href="#open-lab">Save a free Open Lab seat</a>' +
         (book
-          ? '<a class="btn btn-ghost" href="#book">Book a 20-minute demo</a>'
-          : '<a class="btn btn-ghost" href="../demo.html">Book a 20-minute demo</a>');
+          ? '<a class="btn btn-ghost" href="#book">Book a 30-minute demo</a>'
+          : '<a class="btn btn-ghost" href="../demo.html">Book a 30-minute demo</a>');
     }
     var heading = document.querySelector("dialog.reg .reg-h");
     if (heading) heading.textContent = "Save a free Open Lab seat";
