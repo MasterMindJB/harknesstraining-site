@@ -35,7 +35,7 @@ test("chip page stays out of the index, nav, and llm files", () => {
   assert.match(chip, /openlab-practice-mobile\.mp4/);
   assert.equal(/<track\b/i.test(chip), false);
   assert.match(chip, /Save my free Open Lab seat/);
-  assert.match(chip, /I lead managers: book a free 30-minute demo/);
+  assert.match(chip, /data-cta-label="chip: book demo" data-cta-location="chip"[^>]*>Book a demo</);
   assert.match(chip, /Not for you\? Pass the chip to a manager who needs it\./);
   assert.match(chip, /utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-openlab#register/);
   assert.match(chip, /data-cta-label="chip: open lab seat"/);
