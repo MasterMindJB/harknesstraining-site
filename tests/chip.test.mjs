@@ -27,6 +27,8 @@ test("chip page stays out of the index, nav, and llm files", () => {
   assert.equal(/you got the chip/i.test(chip), false);
   assert.equal(chip.includes('class="eyebrow"'), false);
   assert.match(chip, /Practice before it gets real\./);
+  assert.match(chip, /<span>Bring the conversation you keep putting off\.<\/span><span>Run it with an actor who pushes back\.<\/span>/);
+  assert.equal(chip.includes("Free."), false);
   assert.match(chip, /data-ol-film/);
   assert.match(chip, /data-film="openlab-practice-v5"/);
   assert.match(chip, /openlab-practice-desktop\.mp4/);
