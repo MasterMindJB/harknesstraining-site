@@ -24,8 +24,14 @@ test("chip page stays out of the index, nav, and llm files", () => {
     .replace(/<style[\s\S]*?<\/style>/gi, "");
   assert.equal(copy.includes("!"), false);
   assert.match(chip, /<meta name="robots" content="noindex">/);
-  assert.match(chip, /You got the chip\./);
+  assert.equal(/you got the chip/i.test(chip), false);
+  assert.equal(chip.includes('class="eyebrow"'), false);
   assert.match(chip, /Practice before it gets real\./);
+  assert.match(chip, /data-ol-film/);
+  assert.match(chip, /data-film="openlab-practice-v5"/);
+  assert.match(chip, /openlab-practice-desktop\.mp4/);
+  assert.match(chip, /openlab-practice-mobile\.mp4/);
+  assert.equal(/<track\b/i.test(chip), false);
   assert.match(chip, /Save my free Open Lab seat/);
   assert.match(chip, /I lead managers: book a free 30-minute demo/);
   assert.match(chip, /Not for you\? Pass the chip to a manager who needs it\./);

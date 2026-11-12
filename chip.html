@@ -12,7 +12,7 @@
   gtag('js', new Date());
   gtag('config', 'G-5YFXNQWRPW');
 </script>
-<title>You got the chip | Harkness</title>
+<title>Practice before it gets real. | Harkness</title>
 <meta name="description" content="Bring the conversation you keep putting off. Run it with an actor who pushes back. Free.">
 <link rel="canonical" href="https://harknesstraining.com/chip">
 <meta name="theme-color" content="#1C2C5B">
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Harkness Training Solutions">
 <meta property="og:url" content="https://harknesstraining.com/chip">
-<meta property="og:title" content="You got the chip | Harkness">
+<meta property="og:title" content="Practice before it gets real. | Harkness">
 <meta property="og:description" content="Bring the conversation you keep putting off. Run it with an actor who pushes back. Free.">
 <meta property="og:image" content="https://harknesstraining.com/assets/og.png">
 <meta property="og:image:width" content="1200">
@@ -29,7 +29,7 @@
 <meta property="og:image:alt" content="Harkness Training Solutions: Mishandled conversations stall careers.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@harknesstrainin">
-<meta name="twitter:title" content="You got the chip | Harkness">
+<meta name="twitter:title" content="Practice before it gets real. | Harkness">
 <meta name="twitter:description" content="Bring the conversation you keep putting off. Run it with an actor who pushes back. Free.">
 <meta name="twitter:image" content="https://harknesstraining.com/assets/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,10 +41,13 @@
 <style>
 body[data-chip-page]{min-height:100vh;display:flex;flex-direction:column}
 body[data-chip-page] main{flex:1;display:flex;flex-direction:column}
-body[data-chip-page] main>.hero{flex:1;display:flex;align-items:center}
+body[data-chip-page] main>.ol-event{flex:1}
+.ol-event.chip-event h1{font-size:clamp(2.5rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.02em}
+.chip-event .pos{margin-top:22px;max-width:40rem;font-size:clamp(1.15rem,2vw,1.45rem);font-weight:600;line-height:1.45;color:#F3F7FC}
 .chip-doors .btn{text-align:center;line-height:1.35;max-width:100%}
-.chip-pass{margin-top:22px}
+.chip-pass{margin-top:22px;color:#E4EEF8}
 @media (max-width:600px){
+  .ol-event.chip-event h1{font-size:clamp(2.2rem,9.5vw,2.85rem);line-height:1.05}
   .chip-doors{flex-direction:column}
   .chip-doors .btn{justify-content:center}
 }
@@ -70,7 +73,7 @@ body[data-chip-page] main>.hero{flex:1;display:flex;align-items:center}
       "@type": "WebPage",
       "@id": "https://harknesstraining.com/chip#webpage",
       "url": "https://harknesstraining.com/chip",
-      "name": "You got the chip",
+      "name": "Practice before it gets real.",
       "description": "Bring the conversation you keep putting off. Run it with an actor who pushes back. Free.",
       "about": { "@id": "https://harknesstraining.com/#organization" }
     }
@@ -97,20 +100,31 @@ body[data-chip-page] main>.hero{flex:1;display:flex;align-items:center}
   </div>
 </header>
 <main id="main">
-<section class="hero page-hero">
-  <div class="wrap">
-    <div class="hero-grid solo">
-      <div>
-        <p class="eyebrow">You got the chip.</p>
-        <h1 style="margin-top:14px">Practice before it gets real.</h1>
-        <p class="pos">Bring the conversation you keep putting off. Run it with an actor who pushes back. Free.</p>
-        <div class="cta-row chip-doors">
-          <a class="btn btn-hot" data-cta-label="chip: open lab seat" data-cta-location="chip" href="open-lab.html?utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-openlab#register">Save my free Open Lab seat</a>
-          <a class="btn btn-ghost" data-chip-demo data-cta-label="chip: book demo" data-cta-location="chip" target="_blank" rel="noopener" href="https://calendar.app.google/77uHPkoSyX5W1MKw6?utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-demo">I lead managers: book a free 30-minute demo</a>
-        </div>
-        <p class="where chip-pass">Not for you? Pass the chip to a manager who needs it.</p>
-      </div>
+<section class="ol-event chip-event" aria-labelledby="chip-title" style="--ol-pos:center bottom;--ol-pos-m:center bottom;--ol-still:url('open-lab/openlab-practice-desktop-poster.jpg');--ol-still-m:url('open-lab/openlab-practice-mobile-poster.jpg')">
+  <div class="ol-film" aria-hidden="true">
+    <!-- Same caption-free practice cut v5 as Open Lab.
+         Desktop 1280x720, phone 640x800. -->
+    <video class="ol-bg" muted autoplay playsinline loop preload="none" disablepictureinpicture
+           poster="assets/open-lab/openlab-practice-desktop-poster.jpg"
+           data-poster-mobile="assets/open-lab/openlab-practice-mobile-poster.jpg"
+           data-ol-film
+           data-film="openlab-practice-v5"
+           width="1280" height="720">
+      <source media="(max-width: 600px)" data-src="assets/open-lab/openlab-practice-mobile.webm" type="video/webm">
+      <source media="(max-width: 600px)" data-src="assets/open-lab/openlab-practice-mobile.mp4" type="video/mp4">
+      <source data-src="assets/open-lab/openlab-practice-desktop.webm" type="video/webm">
+      <source data-src="assets/open-lab/openlab-practice-desktop.mp4" type="video/mp4">
+    </video>
+    <div class="ol-shade"></div>
+  </div>
+  <div class="wrap ol-event-copy">
+    <h1 id="chip-title">Practice before it gets real.</h1>
+    <p class="pos">Bring the conversation you keep putting off. Run it with an actor who pushes back. Free.</p>
+    <div class="cta-row chip-doors">
+      <a class="btn btn-hot" data-cta-label="chip: open lab seat" data-cta-location="chip" href="open-lab.html?utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-openlab#register">Save my free Open Lab seat</a>
+      <a class="btn btn-ghost" data-chip-demo data-cta-label="chip: book demo" data-cta-location="chip" target="_blank" rel="noopener" href="https://calendar.app.google/77uHPkoSyX5W1MKw6?utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-demo">I lead managers: book a free 30-minute demo</a>
     </div>
+    <p class="where chip-pass">Not for you? Pass the chip to a manager who needs it.</p>
   </div>
 </section>
 </main>
