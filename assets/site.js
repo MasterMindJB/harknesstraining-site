@@ -104,8 +104,48 @@ HTS.renderSchedule = function (el) {
   }).join("");
 };
 
+/* Chip QR visits. utm_source=chip is kept in sessionStorage so it survives
+   the hop from /chip to /open-lab. The registration field is optional. */
+HTS.chipKey = "hts_utm_source";
+HTS.noteChipArrival = function () {
+  try {
+    var path = (location.pathname || "").replace(/\/+$/, "");
+    var onChip = /(?:^|\/)chip(?:\.html)?$/.test(path);
+    var src = new URLSearchParams(location.search || "").get("utm_source") || "";
+    if (onChip || src.toLowerCase() === "chip") sessionStorage.setItem(HTS.chipKey, "chip");
+  } catch (e) {}
+};
+HTS.isChipVisit = function () {
+  try {
+    var src = new URLSearchParams(location.search || "").get("utm_source") || "";
+    if (src.toLowerCase() === "chip") return true;
+    return sessionStorage.getItem(HTS.chipKey) === "chip";
+  } catch (e) { return false; }
+};
+HTS.syncChipField = function () {
+  var wrap = document.querySelector("[data-chip-field]");
+  var input = document.getElementById("reg-chip");
+  if (!wrap || !input) return;
+  var on = HTS.isChipVisit();
+  wrap.hidden = !on;
+  if (on) input.setAttribute("name", "chip_where");
+  else input.removeAttribute("name");
+};
+/* Known Apps Script columns may drop new keys. source and chip_where go in
+   the payload either way, and the same note is appended to conversation. */
+HTS.applyChipRegistration = function (data) {
+  if (!data || data._subject !== "Open Lab registration" || !HTS.isChipVisit()) return;
+  var where = String(data.chip_where || "").trim();
+  data.source = "chip";
+  data.chip_where = where;
+  var note = where ? "[chip] got it at: " + where : "[chip]";
+  var conv = String(data.conversation || "").trim();
+  if (conv.indexOf(note) === -1) data.conversation = conv ? conv + "\n" + note : note;
+};
+
 /* ---------------- forms (Formspree, or email fallback) ---------------- */
 HTS.sendForm = function (form, extra) {
+  if (typeof HTS.syncChipField === "function") HTS.syncChipField();
   var status = form.querySelector(".form-status");
   var data = {};
   Array.prototype.forEach.call(form.elements, function (f) {
@@ -115,6 +155,7 @@ HTS.sendForm = function (form, extra) {
     data[f.name] = f.value.trim();
   });
   for (var k in (extra || {})) data[k] = extra[k];
+  if (typeof HTS.applyChipRegistration === "function") HTS.applyChipRegistration(data);
   if (!HTS.formspree && !HTS.sheetHook) {
     var lines = Object.keys(data).filter(function (k) { return k.charAt(0) !== "_"; }).map(function (k) { return k + ": " + data[k]; });
     location.href = "mailto:" + HTS.email + "?subject=" + encodeURIComponent(data._subject || "Website message") + "&body=" + encodeURIComponent(lines.join("\n"));
@@ -177,7 +218,19 @@ HTS.checkForm = function (form) {
 
 /* ---------------- wire up every page ---------------- */
 document.addEventListener("DOMContentLoaded", function () {
+  HTS.noteChipArrival();
   document.querySelectorAll("[data-demo]").forEach(function (a) { a.href = HTS.demoBooking; a.target = "_blank"; a.rel = "noopener"; });
+  document.querySelectorAll("[data-chip-demo]").forEach(function (a) {
+    try {
+      var u = new URL(HTS.demoBooking || a.href);
+      u.searchParams.set("utm_source", "chip");
+      u.searchParams.set("utm_medium", "offline");
+      u.searchParams.set("utm_campaign", "chip-demo");
+      a.href = u.toString();
+    } catch (e) {}
+    a.target = "_blank";
+    a.rel = "noopener";
+  });
   document.querySelectorAll("[data-email]").forEach(function (e) { e.textContent = HTS.email; });
   document.querySelectorAll("[data-phone]").forEach(function (e) { e.textContent = HTS.phone; });
   document.querySelectorAll("[data-schedule]").forEach(HTS.renderSchedule);
@@ -452,6 +505,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* phone bar: the next step stays under the thumb once you scroll past the hero */
   (function () {
+    if (document.body && document.body.hasAttribute("data-chip-page")) return;
     var onEvents = !!document.getElementById("open-lab");
     var bar = document.createElement("nav");
     bar.className = "mbar"; bar.setAttribute("aria-label", "Next step");
@@ -487,22 +541,37 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div class="row"><div class="field"><label for="reg-co">Company</label><input id="reg-co" name="company" autocomplete="organization"></div>' +
       '<div class="field"><label for="reg-role">Role</label><input id="reg-role" name="role" autocomplete="organization-title"></div></div>' +
       '<div class="field"><label for="reg-conv">What conversation do you want to practice?</label><textarea id="reg-conv" name="conversation" placeholder="Keep it general. For example: telling my VP the date slipped."></textarea></div>' +
+      '<div class="field" data-chip-field hidden><label for="reg-chip">Where did you get your chip?</label><input id="reg-chip" autocomplete="off"></div>' +
       '<label class="reg-watch"><input type="checkbox" name="watch_only" value="yes"> I\'d rather watch this time</label>' +
       '<button class="btn btn-hot" type="submit">Save my seat</button><p class="form-status" role="status" aria-live="polite"></p></form>';
     document.body.appendChild(dlg);
+    function nextSessionLabel() {
+      var d = HTS.dates(1)[0];
+      if (!d) return "";
+      var s = HTS.openNight.online;
+      return HTS.fmtDate(d.date, true) + " · " + s.label + " · " + s.time;
+    }
+    function openRegister(sess) {
+      HTS.syncChipField();
+      dlg.querySelector("[data-reg-when]").textContent = sess || "";
+      dlg.querySelector("[data-reg-session]").value = sess || "";
+      var st = dlg.querySelector(".form-status"); st.textContent = ""; st.className = "form-status";
+      try {
+        if (dlg.showModal) dlg.showModal();
+        else dlg.setAttribute("open", "");
+      } catch (err) { dlg.setAttribute("open", ""); }
+      setTimeout(function () { var n = dlg.querySelector("#reg-name"); if (n) n.focus(); }, 50);
+    }
     dlg.querySelector(".reg-x").addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest('a[href="#register"]');
       if (!a) return;
       e.preventDefault();
-      var sess = a.dataset.session || "";
-      dlg.querySelector("[data-reg-when]").textContent = sess;
-      dlg.querySelector("[data-reg-session]").value = sess;
-      var st = dlg.querySelector(".form-status"); st.textContent = ""; st.className = "form-status";
-      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
-      setTimeout(function () { dlg.querySelector("#reg-name").focus(); }, 50);
+      openRegister(a.dataset.session || nextSessionLabel());
     });
+    HTS.syncChipField();
+    if (location.hash === "#register") openRegister(nextSessionLabel());
   }
 
   var copy = document.getElementById("copy-email");
@@ -886,6 +955,13 @@ function htsCalendarBookingConfirmed(data) {
     try {
       var el = e.target && e.target.closest && e.target.closest("a, button");
       if (!el) return;
+      if (el.hasAttribute("data-cta-label")) {
+        htsEvent("cta_click", {
+          label: el.getAttribute("data-cta-label"),
+          location: el.getAttribute("data-cta-location") || locationOf(el)
+        });
+        return;
+      }
       var label = labelOf(el);
       if (!el.hasAttribute("data-demo") && !named.test(label)) return;
       htsEvent("cta_click", { label: label, location: locationOf(el) });
