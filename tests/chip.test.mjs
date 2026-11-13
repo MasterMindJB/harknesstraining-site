@@ -37,10 +37,21 @@ test("chip page stays out of the index, nav, and llm files", () => {
   assert.match(chip, /Save my free Open Lab seat/);
   assert.match(chip, /data-cta-label="chip: book demo" data-cta-location="chip"[^>]*>Book a demo</);
   assert.match(chip, /Not for you\? Pass the chip to a manager who needs it\./);
-  assert.match(chip, /utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-openlab#register/);
+  const seatBtn = chip.match(/<a[^>]*data-cta-label="chip: open lab seat"[^>]*>/)[0];
+  const demoBtn = chip.match(/<a[^>]*data-cta-label="chip: book demo"[^>]*>/)[0];
+  assert.match(seatBtn, /href="open-lab.html#register"/);
+  assert.equal(seatBtn.includes("utm_"), false);
+  assert.match(demoBtn, /href="demo.html"/);
+  assert.equal(demoBtn.includes("target="), false);
+  assert.equal(demoBtn.includes("calendar.app.google"), false);
+  assert.equal(/20-minute/i.test(chip), false);
+  assert.match(chip, /campaign_source: 'chip'/);
+  assert.match(chip, /campaign_medium: 'qr'/);
+  assert.match(chip, /campaign_name: 'poker-chip'/);
   assert.match(chip, /data-cta-label="chip: open lab seat"/);
   assert.match(chip, /data-cta-label="chip: book demo"/);
   assert.match(chip, /data-cta-location="chip"/);
+  assert.match(read("assets/site.js"), /Where did you get your chip\?/);
   assert.equal(chip.includes('href="chip'), false);
   assert.equal(/nav[\s\S]*chip\.html/.test(chip), false);
 
@@ -223,6 +234,33 @@ async function submitRegistration(cdp, sessionId, where) {
   return { params: Object.fromEntries(new URLSearchParams(formPosts[0].body)), posts, formPosts };
 }
 
+const LAYER = `(function () {
+  return Array.prototype.map.call(window.dataLayer || [], function (args) {
+    if (!args || (args[0] !== "event" && args[0] !== "config")) return null;
+    var params = args[2] || null;
+    var copy = null;
+    if (params && typeof params === "object") {
+      copy = {};
+      for (var k in params) {
+        var v = params[k];
+        if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") copy[k] = v;
+      }
+    }
+    return { cmd: args[0], name: args[1], params: copy };
+  }).filter(Boolean);
+})()`;
+
+async function layer(cdp, sessionId) {
+  return evaluate(cdp, sessionId, LAYER);
+}
+
+async function eventsNamed(cdp, sessionId, name) {
+  await waitFor(cdp, sessionId, `(function () {
+    return Array.prototype.some.call(window.dataLayer || [], function (a) { return a && a[0] === "event" && a[1] === ${JSON.stringify(name)}; });
+  })()`);
+  return (await layer(cdp, sessionId)).filter((e) => e.name === name);
+}
+
 test("registration payload includes the chip field and never calls Apps Script", async (t) => {
   const server = await startServer();
   const origin = "http://127.0.0.1:" + server.address().port;
@@ -242,8 +280,14 @@ test("registration payload includes the chip field and never calls Apps Script",
   assert.match(sent.params.conversation, /telling my VP the date slipped/);
   assert.match(sent.params.conversation, /\[chip\] got it at: the networking table/);
   assert.equal(sent.params._subject, "Open Lab registration");
-  const fieldShown = await evaluate(chrome.cdp, chipVisit.sessionId, `document.querySelector("[data-chip-field]").hidden === false && document.querySelector("#reg-chip").name === "chip_where"`);
+  const fieldShown = await evaluate(chrome.cdp, chipVisit.sessionId, `document.querySelector("[data-chip-field]").hidden === false && document.querySelector("#reg-chip").name === "chip_where" && document.querySelector("[data-chip-field] label").textContent === "Where did you get your chip?"`);
   assert.equal(fieldShown, true);
+  const seatEvents = await eventsNamed(chrome.cdp, chipVisit.sessionId, "seat_saved");
+  assert.equal(seatEvents.length, 1);
+  assert.equal(seatEvents[0].params.source, "chip");
+  const scanOnUtm = (await layer(chrome.cdp, chipVisit.sessionId)).filter((e) => e.name === "chip_scan");
+  assert.equal(scanOnUtm.length, 1);
+  assert.deepEqual(scanOnUtm[0].params, { source: "chip", medium: "qr", campaign: "poker-chip" });
 
   const blank = await evaluate(chrome.cdp, chipVisit.sessionId, `
     window.__posts = [];
@@ -271,20 +315,29 @@ test("registration payload includes the chip field and never calls Apps Script",
   assert.equal(plainSent.posts.some((p) => p.url.includes("script.google.com")), false);
   const fieldHidden = await evaluate(chrome.cdp, plain.sessionId, `document.querySelector("[data-chip-field]").hidden === true && document.querySelector("#reg-chip").name === ""`);
   assert.equal(fieldHidden, true);
+  const plainSeat = await eventsNamed(chrome.cdp, plain.sessionId, "seat_saved");
+  assert.equal(plainSeat.length, 1);
+  assert.equal(plainSeat[0].params.source, undefined);
+  assert.equal((await layer(chrome.cdp, plain.sessionId)).some((e) => e.name === "chip_scan"), false);
 
-  const fromChip = await openPage(chrome.cdp, origin + "/chip");
-  await waitFor(chrome.cdp, fromChip.sessionId, `document.querySelector("[data-cta-label='chip: open lab seat']")`);
-  const doors = await evaluate(chrome.cdp, fromChip.sessionId, `({
+  const typed = await openPage(chrome.cdp, origin + "/chip");
+  await waitFor(chrome.cdp, typed.sessionId, `document.querySelector("[data-cta-label='chip: open lab seat']")`);
+  const doors = await evaluate(chrome.cdp, typed.sessionId, `({
     openLab: document.querySelector("[data-cta-label='chip: open lab seat']").getAttribute("href"),
     demo: document.querySelector("[data-cta-label='chip: book demo']").href,
     stored: sessionStorage.getItem("hts_utm_source"),
     bar: document.querySelector(".mbar") ? "yes" : "no"
   })`);
-  assert.equal(doors.openLab, "open-lab.html?utm_source=chip&utm_medium=offline&utm_campaign=chip-openlab#register");
-  assert.equal(doors.demo, "https://calendar.app.google/77uHPkoSyX5W1MKw6?utm_source=chip&utm_medium=offline&utm_campaign=chip-demo");
-  assert.equal(doors.stored, "chip");
+  assert.equal(doors.openLab, "open-lab.html#register");
+  assert.equal(doors.demo, origin + "/demo.html");
+  assert.equal(doors.stored, null);
   assert.equal(doors.bar, "no");
-  const events = await evaluate(chrome.cdp, fromChip.sessionId, `
+  const typedLayer = await layer(chrome.cdp, typed.sessionId);
+  assert.equal(typedLayer.some((e) => e.name === "chip_scan"), false);
+  const typedConfig = typedLayer.find((e) => e.cmd === "config" && e.name === "G-5YFXNQWRPW");
+  assert.ok(typedConfig);
+  assert.equal(typedConfig.params, null);
+  const events = await evaluate(chrome.cdp, typed.sessionId, `
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest("a");
       if (a) e.preventDefault();
@@ -300,11 +353,62 @@ test("registration payload includes the chip field and never calls Apps Script",
     { a: "event", name: "cta_click", params: { label: "chip: book demo", location: "chip" } }
   ]);
 
-  await chrome.cdp.send("Page.navigate", { url: origin + "/open-lab#register" }, fromChip.sessionId);
-  await waitFor(chrome.cdp, fromChip.sessionId, `document.querySelector("dialog.reg") && document.querySelector("dialog.reg").open && document.querySelector("[data-chip-field]").hidden === false`);
-  const hopped = await submitRegistration(chrome.cdp, fromChip.sessionId, "passed across the table");
+  const scanned = await openPage(chrome.cdp, origin + "/chip?s=qr");
+  await waitFor(chrome.cdp, scanned.sessionId, `document.querySelector("[data-cta-label='chip: book demo']")`);
+  await eventsNamed(chrome.cdp, scanned.sessionId, "chip_scan");
+  const scanLayer = await layer(chrome.cdp, scanned.sessionId);
+  const scanConfig = scanLayer.find((e) => e.cmd === "config" && e.name === "G-5YFXNQWRPW");
+  const scanEvent = scanLayer.find((e) => e.name === "chip_scan");
+  assert.ok(scanConfig && scanEvent);
+  assert.ok(scanLayer.indexOf(scanConfig) < scanLayer.indexOf(scanEvent));
+  assert.equal(scanConfig.params.campaign_source, "chip");
+  assert.equal(scanConfig.params.campaign_medium, "qr");
+  assert.equal(scanConfig.params.campaign_name, "poker-chip");
+  assert.match(scanConfig.params.page_location, /[?&]utm_source=chip(&|$)/);
+  assert.match(scanConfig.params.page_location, /[?&]utm_medium=qr(&|$)/);
+  assert.match(scanConfig.params.page_location, /[?&]utm_campaign=poker-chip(&|$)/);
+  assert.deepEqual(scanEvent.params, { source: "chip", medium: "qr", campaign: "poker-chip" });
+  assert.equal(await evaluate(chrome.cdp, scanned.sessionId, `sessionStorage.getItem("hts_utm_source")`), "chip");
+
+  await evaluate(chrome.cdp, scanned.sessionId, `document.querySelector("[data-cta-label='chip: book demo']").click()`);
+  await waitFor(chrome.cdp, scanned.sessionId, `location.pathname === "/demo.html" && document.querySelector("h1") && document.querySelector("h1").textContent === "Book your demo"`);
+  const booked = await evaluate(chrome.cdp, scanned.sessionId, `
+    window.dispatchEvent(new MessageEvent("message", { origin: "https://calendar.google.com", data: "booking_confirmed" }));
+    (function () {
+      var hit = null;
+      Array.prototype.forEach.call(window.dataLayer || [], function (a) {
+        if (a && a[0] === "event" && a[1] === "demo_request") hit = { source: (a[2] && a[2].source) || "", page_path: a[2] && a[2].page_path };
+      });
+      return hit;
+    })()
+  `);
+  assert.deepEqual(booked, { source: "chip", page_path: "demo.html" });
+  assert.equal(await evaluate(chrome.cdp, scanned.sessionId, `sessionStorage.getItem("hts_utm_source")`), "chip");
+
+  await chrome.cdp.send("Page.navigate", { url: origin + "/open-lab#register" }, scanned.sessionId);
+  await waitFor(chrome.cdp, scanned.sessionId, `document.querySelector("dialog.reg") && document.querySelector("dialog.reg").open && document.querySelector("[data-chip-field]").hidden === false`);
+  assert.equal((await layer(chrome.cdp, scanned.sessionId)).some((e) => e.name === "chip_scan"), false);
+  const hopped = await submitRegistration(chrome.cdp, scanned.sessionId, "passed across the table");
   assert.equal(hopped.params.source, "chip");
   assert.equal(hopped.params.chip_where, "passed across the table");
   assert.match(hopped.params.conversation, /\[chip\] got it at: passed across the table/);
   assert.equal(hopped.posts.some((p) => p.url.includes("script.google.com")), false);
+  const hoppedSeat = await eventsNamed(chrome.cdp, scanned.sessionId, "seat_saved");
+  assert.equal(hoppedSeat.length, 1);
+  assert.equal(hoppedSeat[0].params.source, "chip");
+
+  const demoPlain = await openPage(chrome.cdp, origin + "/demo");
+  await waitFor(chrome.cdp, demoPlain.sessionId, `document.querySelector("h1") && document.querySelector("h1").textContent === "Book your demo"`);
+  const plainDemo = await evaluate(chrome.cdp, demoPlain.sessionId, `
+    window.dispatchEvent(new MessageEvent("message", { origin: "https://calendar.google.com", data: "booking_confirmed" }));
+    (function () {
+      var hit = null;
+      Array.prototype.forEach.call(window.dataLayer || [], function (a) {
+        if (a && a[0] === "event" && a[1] === "demo_request") hit = a[2] || {};
+      });
+      return hit;
+    })()
+  `);
+  assert.equal(plainDemo.page_path, "demo");
+  assert.equal(plainDemo.source, undefined);
 });

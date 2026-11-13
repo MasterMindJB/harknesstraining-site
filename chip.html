@@ -10,7 +10,28 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-5YFXNQWRPW');
+  /* A poker-chip scan is ?s=qr or utm_source=chip. These fields have to be
+     on this config call: it is what sends page_view. */
+  (function () {
+    try {
+      var q = new URLSearchParams(location.search);
+      var scan = (q.get("s") || "").toLowerCase() === "qr" || (q.get("utm_source") || "").toLowerCase() === "chip";
+      if (scan) {
+        var u = new URL(location.href);
+        u.searchParams.set("utm_source", "chip");
+        u.searchParams.set("utm_medium", "qr");
+        u.searchParams.set("utm_campaign", "poker-chip");
+        gtag('config', 'G-5YFXNQWRPW', {
+          campaign_source: 'chip',
+          campaign_medium: 'qr',
+          campaign_name: 'poker-chip',
+          page_location: u.href
+        });
+        return;
+      }
+    } catch (e) {}
+    gtag('config', 'G-5YFXNQWRPW');
+  })();
 </script>
 <title>Practice before it gets real. | Harkness</title>
 <meta name="description" content="Bring the conversation you keep putting off. Run it with an actor who pushes back.">
@@ -37,7 +58,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="assets/site.css?v=71">
 <link rel="prefetch" href="open-lab.html">
-<script src="assets/site.js?v=58"></script>
+<script src="assets/site.js?v=59"></script>
 <style>
 body[data-chip-page]{min-height:100vh;display:flex;flex-direction:column}
 body[data-chip-page] main{flex:1;display:flex;flex-direction:column}
@@ -123,8 +144,8 @@ body[data-chip-page] main>.ol-event{flex:1}
     <h1 id="chip-title">Practice before it gets real.</h1>
     <p class="pos"><span>Bring the conversation you keep putting off.</span><span>Run it with an actor who pushes back.</span></p>
     <div class="cta-row chip-doors">
-      <a class="btn btn-hot" data-cta-label="chip: open lab seat" data-cta-location="chip" href="open-lab.html?utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-openlab#register">Save my free Open Lab seat</a>
-      <a class="btn btn-ghost" data-chip-demo data-cta-label="chip: book demo" data-cta-location="chip" target="_blank" rel="noopener" href="https://calendar.app.google/77uHPkoSyX5W1MKw6?utm_source=chip&amp;utm_medium=offline&amp;utm_campaign=chip-demo">Book a demo</a>
+      <a class="btn btn-hot" data-cta-label="chip: open lab seat" data-cta-location="chip" href="open-lab.html#register">Save my free Open Lab seat</a>
+      <a class="btn btn-ghost" data-cta-label="chip: book demo" data-cta-location="chip" href="demo.html">Book a demo</a>
     </div>
     <p class="where chip-pass">Not for you? Pass the chip to a manager who needs it.</p>
   </div>
