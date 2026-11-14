@@ -104,15 +104,22 @@ HTS.renderSchedule = function (el) {
   }).join("");
 };
 
-/* Chip QR visits. utm_source=chip is kept in sessionStorage so it survives
-   the hop from /chip to /open-lab. The registration field is optional. */
+/* Poker-chip scans. ?s=qr (the QR on the chip) or utm_source=chip counts.
+   A typed /chip visit does not. The first scan in the tab is kept so
+   /open-lab and /demo still know after the query string is gone.
+   Campaign attribution is set in chip.html before page_view. */
 HTS.chipKey = "hts_utm_source";
+HTS.isChipScan = function () {
+  try {
+    var q = new URLSearchParams(location.search || "");
+    return (q.get("s") || "").toLowerCase() === "qr" || (q.get("utm_source") || "").toLowerCase() === "chip";
+  } catch (e) { return false; }
+};
 HTS.noteChipArrival = function () {
   try {
-    var path = (location.pathname || "").replace(/\/+$/, "");
-    var onChip = /(?:^|\/)chip(?:\.html)?$/.test(path);
-    var src = new URLSearchParams(location.search || "").get("utm_source") || "";
-    if (onChip || src.toLowerCase() === "chip") sessionStorage.setItem(HTS.chipKey, "chip");
+    if (!HTS.isChipScan()) return;
+    if (sessionStorage.getItem(HTS.chipKey) !== "chip") sessionStorage.setItem(HTS.chipKey, "chip");
+    htsEvent("chip_scan", { source: "chip", medium: "qr", campaign: "poker-chip" });
   } catch (e) {}
 };
 HTS.isChipVisit = function () {
@@ -175,7 +182,11 @@ HTS.sendForm = function (form, extra) {
     /* Open Lab sign-up is this on-page form, posted to the Google Sheet hook.
        no-cors cannot read the response, so this is the same moment the page
        says "You're in". A Luma link or the mailto fallback has no confirmation. */
-    if ((data._subject || "") === "Open Lab registration") htsEvent("seat_saved", { session: data.session || "" });
+    if ((data._subject || "") === "Open Lab registration") {
+      var seat = { session: data.session || "" };
+      if (HTS.isChipVisit()) seat.source = "chip";
+      htsEvent("seat_saved", seat);
+    }
     /* Demo request: validation already passed in checkForm, and this is the
        same accepted send as seat_saved. A "Book a demo" click stays cta_click.
        The mailto fallback returns before done(), so it is not a confirmation. */
@@ -220,17 +231,6 @@ HTS.checkForm = function (form) {
 document.addEventListener("DOMContentLoaded", function () {
   HTS.noteChipArrival();
   document.querySelectorAll("[data-demo]").forEach(function (a) { a.href = HTS.demoBooking; a.target = "_blank"; a.rel = "noopener"; });
-  document.querySelectorAll("[data-chip-demo]").forEach(function (a) {
-    try {
-      var u = new URL(HTS.demoBooking || a.href);
-      u.searchParams.set("utm_source", "chip");
-      u.searchParams.set("utm_medium", "offline");
-      u.searchParams.set("utm_campaign", "chip-demo");
-      a.href = u.toString();
-    } catch (e) {}
-    a.target = "_blank";
-    a.rel = "noopener";
-  });
   document.querySelectorAll("[data-email]").forEach(function (e) { e.textContent = HTS.email; });
   document.querySelectorAll("[data-phone]").forEach(function (e) { e.textContent = HTS.phone; });
   document.querySelectorAll("[data-schedule]").forEach(HTS.renderSchedule);
@@ -909,7 +909,9 @@ function htsIsDemoRequest(form, data) {
   return /\bdemo\b/i.test((data && data._subject) || "");
 }
 function htsDemoRequest(pagePath) {
-  htsEvent("demo_request", { page_path: pagePath || htsPagePath() });
+  var params = { page_path: pagePath || htsPagePath() };
+  if (HTS.isChipVisit()) params.source = "chip";
+  htsEvent("demo_request", params);
 }
 /* The Book form on demo.html is Google's appointment schedule inside the
    embed. Validation and the Book button stay in that frame, so a click on
