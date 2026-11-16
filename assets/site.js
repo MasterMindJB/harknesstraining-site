@@ -8,7 +8,7 @@ var HTS = {
   // Empty = "Save a seat" buttons open an email to hello@ instead.
   luma: "",
 
-  // Google Calendar appointment schedule (demo; set to 20 minutes in Google Calendar).
+  // Google Calendar appointment schedule (demo; set to 30 minutes in Google Calendar).
   demoBooking: "https://calendar.app.google/77uHPkoSyX5W1MKw6",
 
   // Optional: the long "Embed" URL from Google Calendar appointment
@@ -104,8 +104,55 @@ HTS.renderSchedule = function (el) {
   }).join("");
 };
 
+/* Poker-chip scans. ?s=qr (the QR on the chip) or utm_source=chip counts.
+   A typed /chip visit does not. The first scan in the tab is kept so
+   /open-lab and /demo still know after the query string is gone.
+   Campaign attribution is set in chip.html before page_view. */
+HTS.chipKey = "hts_utm_source";
+HTS.isChipScan = function () {
+  try {
+    var q = new URLSearchParams(location.search || "");
+    return (q.get("s") || "").toLowerCase() === "qr" || (q.get("utm_source") || "").toLowerCase() === "chip";
+  } catch (e) { return false; }
+};
+HTS.noteChipArrival = function () {
+  try {
+    if (!HTS.isChipScan()) return;
+    if (sessionStorage.getItem(HTS.chipKey) !== "chip") sessionStorage.setItem(HTS.chipKey, "chip");
+    htsEvent("chip_scan", { source: "chip", medium: "qr", campaign: "poker-chip" });
+  } catch (e) {}
+};
+HTS.isChipVisit = function () {
+  try {
+    var src = new URLSearchParams(location.search || "").get("utm_source") || "";
+    if (src.toLowerCase() === "chip") return true;
+    return sessionStorage.getItem(HTS.chipKey) === "chip";
+  } catch (e) { return false; }
+};
+HTS.syncChipField = function () {
+  var wrap = document.querySelector("[data-chip-field]");
+  var input = document.getElementById("reg-chip");
+  if (!wrap || !input) return;
+  var on = HTS.isChipVisit();
+  wrap.hidden = !on;
+  if (on) input.setAttribute("name", "chip_where");
+  else input.removeAttribute("name");
+};
+/* Known Apps Script columns may drop new keys. source and chip_where go in
+   the payload either way, and the same note is appended to conversation. */
+HTS.applyChipRegistration = function (data) {
+  if (!data || data._subject !== "Open Lab registration" || !HTS.isChipVisit()) return;
+  var where = String(data.chip_where || "").trim();
+  data.source = "chip";
+  data.chip_where = where;
+  var note = where ? "[chip] got it at: " + where : "[chip]";
+  var conv = String(data.conversation || "").trim();
+  if (conv.indexOf(note) === -1) data.conversation = conv ? conv + "\n" + note : note;
+};
+
 /* ---------------- forms (Formspree, or email fallback) ---------------- */
 HTS.sendForm = function (form, extra) {
+  if (typeof HTS.syncChipField === "function") HTS.syncChipField();
   var status = form.querySelector(".form-status");
   var data = {};
   Array.prototype.forEach.call(form.elements, function (f) {
@@ -115,6 +162,7 @@ HTS.sendForm = function (form, extra) {
     data[f.name] = f.value.trim();
   });
   for (var k in (extra || {})) data[k] = extra[k];
+  if (typeof HTS.applyChipRegistration === "function") HTS.applyChipRegistration(data);
   if (!HTS.formspree && !HTS.sheetHook) {
     var lines = Object.keys(data).filter(function (k) { return k.charAt(0) !== "_"; }).map(function (k) { return k + ": " + data[k]; });
     location.href = "mailto:" + HTS.email + "?subject=" + encodeURIComponent(data._subject || "Website message") + "&body=" + encodeURIComponent(lines.join("\n"));
@@ -134,7 +182,11 @@ HTS.sendForm = function (form, extra) {
     /* Open Lab sign-up is this on-page form, posted to the Google Sheet hook.
        no-cors cannot read the response, so this is the same moment the page
        says "You're in". A Luma link or the mailto fallback has no confirmation. */
-    if ((data._subject || "") === "Open Lab registration") htsEvent("seat_saved", { session: data.session || "" });
+    if ((data._subject || "") === "Open Lab registration") {
+      var seat = { session: data.session || "" };
+      if (HTS.isChipVisit()) seat.source = "chip";
+      htsEvent("seat_saved", seat);
+    }
     /* Demo request: validation already passed in checkForm, and this is the
        same accepted send as seat_saved. A "Book a demo" click stays cta_click.
        The mailto fallback returns before done(), so it is not a confirmation. */
@@ -177,6 +229,7 @@ HTS.checkForm = function (form) {
 
 /* ---------------- wire up every page ---------------- */
 document.addEventListener("DOMContentLoaded", function () {
+  HTS.noteChipArrival();
   document.querySelectorAll("[data-demo]").forEach(function (a) { a.href = HTS.demoBooking; a.target = "_blank"; a.rel = "noopener"; });
   document.querySelectorAll("[data-email]").forEach(function (e) { e.textContent = HTS.email; });
   document.querySelectorAll("[data-phone]").forEach(function (e) { e.textContent = HTS.phone; });
@@ -452,6 +505,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* phone bar: the next step stays under the thumb once you scroll past the hero */
   (function () {
+    if (document.body && document.body.hasAttribute("data-chip-page")) return;
     var onEvents = !!document.getElementById("open-lab");
     var bar = document.createElement("nav");
     bar.className = "mbar"; bar.setAttribute("aria-label", "Next step");
@@ -487,22 +541,37 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div class="row"><div class="field"><label for="reg-co">Company</label><input id="reg-co" name="company" autocomplete="organization"></div>' +
       '<div class="field"><label for="reg-role">Role</label><input id="reg-role" name="role" autocomplete="organization-title"></div></div>' +
       '<div class="field"><label for="reg-conv">What conversation do you want to practice?</label><textarea id="reg-conv" name="conversation" placeholder="Keep it general. For example: telling my VP the date slipped."></textarea></div>' +
+      '<div class="field" data-chip-field hidden><label for="reg-chip">Where did you get your chip?</label><input id="reg-chip" autocomplete="off"></div>' +
       '<label class="reg-watch"><input type="checkbox" name="watch_only" value="yes"> I\'d rather watch this time</label>' +
       '<button class="btn btn-hot" type="submit">Save my seat</button><p class="form-status" role="status" aria-live="polite"></p></form>';
     document.body.appendChild(dlg);
+    function nextSessionLabel() {
+      var d = HTS.dates(1)[0];
+      if (!d) return "";
+      var s = HTS.openNight.online;
+      return HTS.fmtDate(d.date, true) + " · " + s.label + " · " + s.time;
+    }
+    function openRegister(sess) {
+      HTS.syncChipField();
+      dlg.querySelector("[data-reg-when]").textContent = sess || "";
+      dlg.querySelector("[data-reg-session]").value = sess || "";
+      var st = dlg.querySelector(".form-status"); st.textContent = ""; st.className = "form-status";
+      try {
+        if (dlg.showModal) dlg.showModal();
+        else dlg.setAttribute("open", "");
+      } catch (err) { dlg.setAttribute("open", ""); }
+      setTimeout(function () { var n = dlg.querySelector("#reg-name"); if (n) n.focus(); }, 50);
+    }
     dlg.querySelector(".reg-x").addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest('a[href="#register"]');
       if (!a) return;
       e.preventDefault();
-      var sess = a.dataset.session || "";
-      dlg.querySelector("[data-reg-when]").textContent = sess;
-      dlg.querySelector("[data-reg-session]").value = sess;
-      var st = dlg.querySelector(".form-status"); st.textContent = ""; st.className = "form-status";
-      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
-      setTimeout(function () { dlg.querySelector("#reg-name").focus(); }, 50);
+      openRegister(a.dataset.session || nextSessionLabel());
     });
+    HTS.syncChipField();
+    if (location.hash === "#register") openRegister(nextSessionLabel());
   }
 
   var copy = document.getElementById("copy-email");
@@ -840,7 +909,9 @@ function htsIsDemoRequest(form, data) {
   return /\bdemo\b/i.test((data && data._subject) || "");
 }
 function htsDemoRequest(pagePath) {
-  htsEvent("demo_request", { page_path: pagePath || htsPagePath() });
+  var params = { page_path: pagePath || htsPagePath() };
+  if (HTS.isChipVisit()) params.source = "chip";
+  htsEvent("demo_request", params);
 }
 /* The Book form on demo.html is Google's appointment schedule inside the
    embed. Validation and the Book button stay in that frame, so a click on
@@ -886,6 +957,13 @@ function htsCalendarBookingConfirmed(data) {
     try {
       var el = e.target && e.target.closest && e.target.closest("a, button");
       if (!el) return;
+      if (el.hasAttribute("data-cta-label")) {
+        htsEvent("cta_click", {
+          label: el.getAttribute("data-cta-label"),
+          location: el.getAttribute("data-cta-location") || locationOf(el)
+        });
+        return;
+      }
       var label = labelOf(el);
       if (!el.hasAttribute("data-demo") && !named.test(label)) return;
       htsEvent("cta_click", { label: label, location: locationOf(el) });
