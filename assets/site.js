@@ -8,7 +8,7 @@ var HTS = {
   // Empty = "Save a seat" buttons open an email to hello@ instead.
   luma: "",
 
-  // Google Calendar appointment schedule (demo; set to 20 minutes in Google Calendar).
+  // Google Calendar appointment schedule (demo; set to 30 minutes in Google Calendar).
   demoBooking: "https://calendar.app.google/77uHPkoSyX5W1MKw6",
 
   // Optional: the long "Embed" URL from Google Calendar appointment
@@ -936,7 +936,7 @@ function htsCalendarBookingConfirmed(data) {
   });
 })();
 (function () {
-  var named = /^(save a seat|book a demo|book a 20-minute demo|try it free at open lab|pick a time|pick a time for a demo)$/i;
+  var named = /^(save a seat|book a demo|book a 20-minute demo|book a 30-minute demo|try it free at open lab|pick a time|pick a time for a demo)$/i;
   function labelOf(el) {
     return (el.textContent || "").replace(/\s+/g, " ").trim();
   }

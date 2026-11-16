@@ -9,7 +9,7 @@ Founding rates lock in for teams that start by Dec 31, 2026. Teams of 15 to 20 p
 ## Offers
 
 - [Open Lab](https://harknesstraining.com/open-lab): Free, 90 minutes. Bring one conversation you are dreading, or watch. Every session is online at 12:00–1:30 PM Pacific. Once a month there is also an in-person session in El Segundo at 6:00–7:30 PM Pacific.
-- [Demo](https://harknesstraining.com/demo): Free, 20 minutes, for teams.
+- [Demo](https://harknesstraining.com/demo): Free, 30 minutes, for teams.
 - [Kickoff](https://harknesstraining.com/#programs): $150 per person. One 75-minute session. Credited in full toward the Pilot.
 - [Pilot](https://harknesstraining.com/#programs): $650 per person. Three sessions, weeks 1–3.
 - [Full Program](https://harknesstraining.com/#programs): $2,500 per person. Five sessions, with a before-and-after results report.
@@ -31,7 +31,7 @@ Founding rates lock in for teams that start by Dec 31, 2026. Teams of 15 to 20 p
 - [Difficult conversations](https://harknesstraining.com/difficult-conversations-training): Practice with an actor, then peer feedback.
 - [Pricing](https://harknesstraining.com/pricing): Same prices as the home page.
 - [Custom programs](https://harknesstraining.com/custom): Build the scenarios from the team's own conversations.
-- [Book a demo](https://harknesstraining.com/demo): Free 20-minute demo.
+- [Book a demo](https://harknesstraining.com/demo): Free 30-minute demo.
 - [FAQ](https://harknesstraining.com/#faq): Questions people ask before signing up.
 - [Longer summary](https://harknesstraining.com/llms-full.txt): The same facts, plus the FAQ answers in plain text.
 
